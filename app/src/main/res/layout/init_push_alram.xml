@@ -3,42 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".InitPushAlram">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="100dp"
-            android:text="@string/text1"
+            android:background="@drawable/title"
             android:gravity="center"
-            android:textSize="35dp"
-            android:background="@drawable/title"/>
+            android:text="@string/text1"
+            android:textSize="35dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="30dp"
-            android:layout_gravity="center"
             android:text="@string/text2"
-            android:textSize="35dp"/>
+            android:textSize="35dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:text="@string/text3" />
 
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:layout_gravity="center"
+            android:layout_marginTop="100dp"
             android:minHeight="60dp"
             android:showText="true"
             android:switchMinWidth="100dp"
@@ -51,28 +51,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:layout_gravity="center"
+            android:layout_marginTop="100dp"
             android:text="@string/text4"
-            android:textSize="35dp"/>
+            android:textSize="35dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_gravity="center"
             android:layout_margin="100dp"
-            android:layout_gravity="center">
+            android:orientation="horizontal">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/am"/>
+                android:text="@string/am" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/시간"/>
+                android:text="@string/시간" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -85,32 +85,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/circle"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/emptyCircle"/>
-
-            </LinearLayout>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:src="@drawable/back"/>
+                android:src="@drawable/back" />
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/circle" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/emptyCircle" />
+            </LinearLayout>
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -120,9 +120,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-
 
 
 </LinearLayout>
