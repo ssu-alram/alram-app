@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,76 +13,70 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="100dp"
             android:text="@string/text1"
+            android:gravity="center"
+            android:textSize="35dp"
             android:background="@drawable/title"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="@string/text2" />
+            android:layout_gravity="center"
+            android:text="@string/text2"
+            android:textSize="35dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:text="@string/text3" />
 
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minHeight="60dp"
+            android:showText="true"
             android:switchMinWidth="100dp"
             android:switchPadding="20dp"
-            android:showText="true"
-            android:textOn="@string/on"
             android:textOff="@string/off"
+            android:textOn="@string/on"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        <ImageButton
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/back"/>
-
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/next"/>
+            android:layout_margin="30dp"
+            android:layout_gravity="center"
+            android:text="@string/text4"
+            android:textSize="35dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_margin="100dp"
+            android:layout_gravity="center">
 
             <Button
                 android:layout_width="wrap_content"
-                style="?android:attr/buttonBarButtonStyle">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/am" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pm" />
-            </Button>
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/am"/>
+
             <Button
                 android:layout_width="wrap_content"
-                style="?android:attr/buttonBarButtonStyle">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/시간" />
-            </Button>
+                android:layout_height="wrap_content"
+                android:text="@string/시간"/>
+
             <Button
                 android:layout_width="wrap_content"
-                style="?android:attr/buttonBarButtonStyle">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/시간" />
-            </Button>
+                android:layout_height="wrap_content"
+                android:text="@string/시간" />
 
         </LinearLayout>
 
@@ -103,6 +97,25 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back"/>
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:src="@drawable/next" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -110,4 +123,4 @@
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
