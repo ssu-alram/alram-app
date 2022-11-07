@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:text="@string/text3" />
 
         <Switch
@@ -54,6 +55,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:text="@string/text4"
+            android:gravity="center"
             android:textSize="35dp" />
 
         <LinearLayout
@@ -90,31 +92,38 @@
 
 
             <ImageButton
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/back" />
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
                     android:src="@drawable/circle" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
                     android:src="@drawable/emptyCircle" />
             </LinearLayout>
 
             <ImageButton
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/next" />
 
         </LinearLayout>
