@@ -9,7 +9,7 @@ public class InitPushAlram extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.init_push_alram);
+        setContentView(R.layout.activity_init_push_alram);
 
 
     }
