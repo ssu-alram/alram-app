@@ -12,5 +12,6 @@
     <string name="시간">00</string>
     <string name="내일의목표">明天的目標</string>
     <string name="할일추가">在此處添加您的待辦事項列表!</string>
+    <string name=설정완료">設置完成</string>
 
 </resources>

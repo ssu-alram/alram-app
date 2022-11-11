@@ -48,16 +48,61 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <CheckBox
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="35dp">
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:text="@string/할일추가">
+                android:layout_height="match_parent">
 
-            </CheckBox>
+                <TableRow>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/할일추가">
 
+                    </EditText>
+                </TableRow>
+                <TableRow>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/할일추가">
+
+                    </EditText>
+                </TableRow>
+                <TableRow>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/할일추가">
+
+                    </EditText>
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="112dp"
+            android:layout_marginRight="112dp"
+            android:text="@string/설정완료"
+            android:textSize="25dp"
+            android:background="@drawable/button_1">
         </LinearLayout>
 
     </LinearLayout>
