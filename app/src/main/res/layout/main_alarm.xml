@@ -27,11 +27,6 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/am" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -50,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="35dp">
+            android:layout_margin="50dp">
+
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -98,11 +94,12 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="112dp"
-            android:layout_marginRight="112dp"
+            android:layout_margin="130dp"
             android:text="@string/설정완료"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:background="@drawable/button_1">
+
+        </Button>
         </LinearLayout>
 
     </LinearLayout>
