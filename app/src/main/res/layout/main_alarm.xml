@@ -100,7 +100,6 @@
             android:background="@drawable/button_1">
 
         </Button>
-        </LinearLayout>
 
     </LinearLayout>
 

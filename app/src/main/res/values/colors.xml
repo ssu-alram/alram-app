@@ -15,4 +15,10 @@
     <color name="TabLayoutColor">#33FFFFFF</color>
     <color name="TabColor">#FFFFFF</color>
     <color name="None">#00000000</color>
+
+    <!-- A custom time picker library 색상 변경 -->
+    <color name="black">#FFFFFF</color>
+    <color name="grey">#CCFFFFFF</color>
+    <color name="time_unit_selected_color">#FFFFFF</color>
+    <color name="time_unit_unselected_color">#CCFFFFFF</color>
 </resources>
