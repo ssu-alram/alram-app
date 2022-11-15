@@ -97,17 +97,16 @@
                 android:background="@drawable/button_1">
 
             </Button>
+
+            <LinearLayout
+                android:id="@+id/setting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/calender"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/setting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

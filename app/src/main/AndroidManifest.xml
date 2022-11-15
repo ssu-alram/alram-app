@@ -27,9 +27,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainAlarm"
-            android:exported="false" />
-        <activity
             android:name=".InitPushAlram"
             android:exported="true">
             <intent-filter>
