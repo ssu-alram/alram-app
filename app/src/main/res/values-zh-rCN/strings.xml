@@ -4,6 +4,11 @@
     <string name="text1">默认设置</string>
     <string name="text2">弹出警报生成通知</string>
     <string name="text3">如果没有设置闹钟，会在同一时间发送生成闹钟的推送通知。</string>
+
+    <string name="text1_1">設置警報默認值</string>
+    <string name="text2_1">如果沒有設置鬧鐘，則默認設置為響鈴。</string>
+    <string name="text3_1">指定默認警報時間</string>
+
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="text4">指定生成提醒的时间</string>
