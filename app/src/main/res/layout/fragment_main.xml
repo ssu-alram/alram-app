@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainAlarm">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FragmentMain">
 
+    <!-- TODO: 메인 화면 만들기 -->
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -15,30 +16,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="100dp"
+            android:layout_margin="60dp"
             android:gravity="center"
             android:text="@string/내일의목표"
             android:textSize="30dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/시간" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/시간" />
-
-        </LinearLayout>
+        <com.example.ticker.core.ui.Ticker
+            android:id="@+id/time_picker"
+            android:layout_width="280dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            app:hoursFormat="hours12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:minutesInterval="1"
+            app:shouldAmSelected="false" />
 
 
         <LinearLayout
@@ -53,21 +47,16 @@
 
                 <TableRow>
                     <CheckBox
-                        android:id="@+id/box1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     </CheckBox>
                     <EditText
-                        android:id="@+id/todo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/할일추가">
-
-                    </EditText>
+                        android:text="@string/할일추가"/>
                 </TableRow>
                 <TableRow>
                     <CheckBox
-                        android:id="@+id/box2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     </CheckBox>
@@ -80,7 +69,6 @@
                 </TableRow>
                 <TableRow>
                     <CheckBox
-                        android:id="@+id/box3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     </CheckBox>
@@ -96,7 +84,6 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/settingbutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="130dp"
@@ -105,10 +92,6 @@
             android:background="@drawable/button_1">
 
         </Button>
-        </LinearLayout>
-
     </LinearLayout>
-
-
 
 </LinearLayout>

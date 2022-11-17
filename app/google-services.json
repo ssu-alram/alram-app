@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "682695720034",
+    "project_id": "alarm-4e545",
+    "storage_bucket": "alarm-4e545.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682695720034:android:8268337f6aaee83190e53b",
+        "android_client_info": {
+          "package_name": "com.example.alarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682695720034-6reu8th5ler4r818dsnk2a9s7ii1jice.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alarm",
+            "certificate_hash": "d2b550ad5a42dd1819aacd6e1e4fd118088a7d6e"
+          }
+        },
+        {
+          "client_id": "682695720034-h9l693vlvjn4ukobl7ef8ue2fts7mqe4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXk4Ab0IrHwi86a-4uc7dNt1m_vhKf1JA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682695720034-h9l693vlvjn4ukobl7ef8ue2fts7mqe4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
