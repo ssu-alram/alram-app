@@ -12,8 +12,9 @@
     <color name="OnBackground">#000000</color>
     <color name="OnSurface">#000000</color>
     <color name="OnError">#FFFFFF</color>
-    <color name="TabLayoutColor">#33FFFFFF</color>
     <color name="TabColor">#FFFFFF</color>
+    <color name="LayoutColor">#33FFFFFF</color>
+    <color name="LayoutStrokeColor">#FFFFFF</color>
     <color name="None">#00000000</color>
 
     <!-- A custom time picker library 색상 변경 -->

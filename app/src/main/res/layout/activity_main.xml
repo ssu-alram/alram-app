@@ -1,151 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/main"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_main"
+            android:name="com.example.alarm.FragmentMain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="60dp"
-                android:gravity="center"
-                android:text="@string/내일의목표"
-                android:textSize="30dp"/>
-
-            <com.example.ticker.core.ui.Ticker
-                android:id="@+id/time_picker"
-                android:layout_width="280dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                app:hoursFormat="hours12"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:minutesInterval="1"
-                app:shouldAmSelected="false" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="50dp">
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TableRow>
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                        </CheckBox>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/할일추가"/>
-                    </TableRow>
-                    <TableRow>
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                        </CheckBox>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/할일추가">
-
-                        </EditText>
-                    </TableRow>
-                    <TableRow>
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                        </CheckBox>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/할일추가">
-
-                        </EditText>
-                    </TableRow>
-                </TableLayout>
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="130dp"
-                android:text="@string/설정완료"
-                android:textSize="20dp"
-                android:background="@drawable/button_1">
-
-            </Button>
-
-            <LinearLayout
-                android:id="@+id/setting"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/calender"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_calender"
+            android:name="com.example.alarm.FragmentCalender"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
         <LinearLayout
+            android:id="@+id/tabView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="30dp"
+            android:background="@drawable/bg_tab_layout"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:background="@drawable/bg_tab_layout">
+            android:paddingBottom="8dp">
 
             <ImageButton
+                android:id="@+id/tab1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="30dp"
                 android:backgroundTint="@color/None"
-                android:src="@drawable/ic_calendar"
-                android:id="@+id/tab1"/>
+                android:src="@drawable/ic_calendar" />
+
             <ImageButton
+                android:id="@+id/tab2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
                 android:backgroundTint="@color/None"
-                android:src="@drawable/ic_alarm"
-                android:id="@+id/tab2"/>
+                android:src="@drawable/ic_alarm" />
+
             <ImageButton
+                android:id="@+id/tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:backgroundTint="@color/None"
-                android:src="@drawable/ic_filled_settings"
-                android:id="@+id/tab3"/>
+                android:src="@drawable/ic_filled_settings" />
 
         </LinearLayout>
     </FrameLayout>
+
 
 </LinearLayout>

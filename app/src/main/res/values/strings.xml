@@ -18,4 +18,6 @@
     <string name="체크표시후">체크 표시를 완료했어요!</string>
     <string name="할일목록전">할 일 목록을 완료하세요!</string>
     <string name="할일목록후">할 일 목록을 완료했어요!</string>
+
+    <string name="목표기록장">목표 기록장</string>
 </resources>
