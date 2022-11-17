@@ -38,15 +38,13 @@
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:minHeight="60dp"
-            android:showText="true"
-            android:switchMinWidth="100dp"
-            android:switchPadding="20dp"
-            android:textOff="@string/off"
-            android:textOn="@string/on"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            android:switchPadding="500dp"
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/selector_switch"
+            android:switchMinWidth="50dp"
+            />
 
 
         <TextView
@@ -92,6 +90,7 @@
 
 
             <ImageButton
+                android:id="@+id/backbutton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -117,10 +116,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:src="@drawable/emptycircle" />
+                    android:src="@drawable/emptyCircle" />
             </LinearLayout>
 
             <ImageButton
+                android:id="@+id/nextbutton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
