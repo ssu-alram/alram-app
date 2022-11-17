@@ -79,12 +79,13 @@
             android:orientation="horizontal">
 
 
-            <ImageButton
+            <Button
                 android:id="@+id/backbutton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/back" />
+                android:background="@drawable/back"/>
+
 
 
             <LinearLayout
@@ -109,12 +110,12 @@
                     android:src="@drawable/emptyCircle" />
             </LinearLayout>
 
-            <ImageButton
+            <Button
                 android:id="@+id/nextbutton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/next" />
+                android:background="@drawable/next"/>
 
         </LinearLayout>
 
