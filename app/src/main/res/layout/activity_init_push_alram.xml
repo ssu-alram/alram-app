@@ -44,7 +44,7 @@
             android:switchPadding="500dp"
             android:thumb="@drawable/switch_thumb"
             android:track="@drawable/selector_switch"
-            android:switchMinWidth="50dp"
+            android:switchMinWidth="70dp"
             />
 
 
