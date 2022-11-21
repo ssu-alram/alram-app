@@ -14,13 +14,18 @@ public class InitPushAlram extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_init_push_alram);
+        setContentView(R.layout.init_push_alram);
 
         backbutton = findViewById(R.id.backbutton);
         nextbutton = findViewById(R.id.nextbutton);
 
         backbutton.setOnClickListener(this);
         nextbutton.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
 
     }
 }
