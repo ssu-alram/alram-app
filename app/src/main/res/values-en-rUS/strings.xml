@@ -23,4 +23,6 @@
     <string name="체크표시후">Checkmark done!</string>
     <string name="할일목록전">Complete your to-do list!</string>
     <string name="할일목록후">To-do list done!</string>
+    <string name="목표기록장">Goal Record Book</string>
+
 </resources>

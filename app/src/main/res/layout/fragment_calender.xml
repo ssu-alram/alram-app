@@ -15,28 +15,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/목표기록장"
-                android:textSize="30dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="2"
-                android:layout_marginLeft="10dp"/>
+                android:text="@string/목표기록장"
+                android:textSize="30dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이 공간에는 날자를 띄웁니다"
-                android:layout_weight="1"/>
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:text="이 공간에는 날자를 띄웁니다" />
         </LinearLayout>
 
         <!--달력 영역-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="20dp"
-            android:background="@drawable/bg_calender_layout">
+            android:background="@drawable/bg_calender_layout"
+            android:orientation="vertical">
 
 
             <!--헤더-->
