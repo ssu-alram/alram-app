@@ -7,13 +7,15 @@
     tools:context=".InitPushAlram">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_margin="100dp"
             android:background="@drawable/title"
             android:gravity="center"
@@ -22,7 +24,8 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_margin="30dp"
             android:text="@string/text2"
@@ -30,16 +33,18 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="14dp"
             android:layout_gravity="center"
             android:layout_margin="30dp"
+            android:layout_weight="0.5"
             android:gravity="center"
-            android:textSize="20dp"
-            android:text="@string/text3" />
+            android:text="@string/text3"
+            android:textSize="20dp" />
 
         <Switch
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:switchPadding="500dp"
@@ -51,7 +56,8 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:text="@string/text4"
@@ -61,7 +67,8 @@
         <com.example.ticker.core.ui.Ticker
             android:id="@+id/time_picker"
             android:layout_width="280dp"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_margin="50dp"
             app:hoursFormat="hours12"
@@ -75,7 +82,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -108,7 +116,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:src="@drawable/emptyCircle" />
+                    android:src="@drawable/emptycircle" />
             </LinearLayout>
 
             <Button

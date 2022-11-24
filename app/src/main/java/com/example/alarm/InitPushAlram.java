@@ -2,6 +2,7 @@ package com.example.alarm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,10 @@ public class InitPushAlram extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent(this,InitRepeatAlram.class );
+            startActivity(intent);
+        }
 
-    }
+
+
 }

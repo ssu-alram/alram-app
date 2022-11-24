@@ -2,6 +2,7 @@
 <resources>
     <color name="Primary">#8054FE</color>
     <color name="PrimaryVariant">#5A00A1</color>
+    <color name="PrimaryVariantTransparent">#665A00A1</color>
     <color name="Secondary">#03DAC6</color>
     <color name="SecondaryVariant">#018786</color>
     <color name="Background">#121212</color>
@@ -12,7 +13,16 @@
     <color name="OnBackground">#FFFFFF</color>
     <color name="OnSurface">#FFFFFF</color>
     <color name="OnError">#000000</color>
-    <color name="TabLayoutColor">#333C006B</color>
-    <color name="TabColor">#3C006B</color>
+    <color name="TabColor">#000000</color>
+    <color name="BtnColor">#99FFFFFF</color>
+    <color name="BtnStrokeColor">#FFFFFF</color>
+    <color name="LayoutColor">#803C006B</color>
+    <color name="LayoutStrokeColor">#3C006B</color>
     <color name="None">#00000000</color>
+
+    <!-- A custom time picker library 색상 변경 -->
+    <color name="black">#000000</color>
+    <color name="grey">#CC000000</color>
+    <color name="time_unit_selected_color">#000000</color>
+    <color name="time_unit_unselected_color">#CC000000</color>
 </resources>
