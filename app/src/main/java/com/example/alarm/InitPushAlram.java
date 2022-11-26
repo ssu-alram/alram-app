@@ -32,8 +32,9 @@ public class InitPushAlram extends AppCompatActivity implements View.OnClickList
 
         ComponentName init_two = new ComponentName(
                 "com.example.alarm",
-                "android.intent.action.MAIN"
+                "com.example.alarm.InitRepeatAlram"
         );
+        intent.setComponent(init_two);
         startActivity(intent);
         }
 
