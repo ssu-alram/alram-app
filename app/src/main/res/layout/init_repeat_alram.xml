@@ -33,7 +33,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/text1_1"
         android:textColor="#ffffff"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         android:gravity="center"
         android:text="@string/text2_1"
         android:textColor="#ffffff"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
 
     <Switch
         android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
         android:text="@string/text3_1"
         android:gravity="center"
         android:textColor="#ffffff"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
 
     <com.example.ticker.core.ui.Ticker
         android:id="@+id/time_picker"
