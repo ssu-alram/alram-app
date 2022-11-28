@@ -21,45 +21,45 @@
                 android:id="@+id/calender"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="10"
-                android:visibility="visible"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:weightSum="10">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/목표기록장"
-                        android:textSize="30sp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:text="@string/목표기록장"
+                        android:textSize="30sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="이 공간에는 날자를 띄웁니다"
-                        />
+                        android:text="이 공간에는 날자를 띄웁니다" />
                 </LinearLayout>
 
                 <!--달력 영역-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:orientation="vertical"
                     android:layout_margin="20dp"
                     android:layout_weight="7"
-                    android:background="@drawable/bg_calender_layout">
+                    android:background="@drawable/bg_calender_layout"
+                    android:orientation="vertical">
 
                     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                         android:id="@+id/calendarView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:mcv_showOtherDates="all"
-                        app:mcv_selectionColor="#00F"
-                        />
+                        app:mcv_selectionColor="@color/Primary"
+                        app:mcv_showOtherDates="all" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -68,29 +68,29 @@
                 android:id="@+id/main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="10"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:weightSum="10">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
                     android:layout_marginTop="15dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/내일의목표"
+                    android:textColor="@color/OnPrimary"
                     android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/OnPrimary"/>
+                    android:textStyle="bold" />
 
                 <com.example.ticker.core.ui.Ticker
                     android:id="@+id/time_picker"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="70dp"
                     android:layout_marginRight="70dp"
-                    android:layout_gravity="center"
+                    android:layout_weight="3"
                     app:hoursFormat="hours12"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -104,55 +104,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:weightSum="3">
 
-                    <ScrollView
+                    <ListView
+                        android:id="@+id/listview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <TableLayout
-                            android:id="@+id/todo_list"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.5"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="30dp"
+                        android:scrollbars="none"
+                        android:dividerHeight="0px"
+                        android:divider="#FFFFFF">
+
+                    </ListView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:id="@+id/add_todo">
+
+                        <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="20dp">
-                            <include layout="@layout/todo_list_design"/>
-                            <include layout="@layout/todo_list_design"/>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:padding="5dp"
-                                android:id="@+id/addTODO">
-                                <CheckBox
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:visibility="invisible">
-                                </CheckBox>
-                                <EditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:hint="@string/할일추가"
-                                    android:textColorHint="@color/PrimaryVariantTransparent"
-                                    android:textColor="@color/PrimaryVariantTransparent"
-                                    android:background="@color/None"/>
-                            </TableRow>
-
-                        </TableLayout>
-                    </ScrollView>
+                            android:layout_height="wrap_content"
+                            android:background="@color/None"
+                            android:hint="@string/할일추가"
+                            android:textColor="@color/PrimaryVariantTransparent"
+                            android:textColorHint="@color/PrimaryVariantTransparent"
+                            android:textSize="18dp" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="50dp"
+                    android:layout_marginTop="50dp"
                     android:background="@drawable/bg_btn_layout"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="@string/설정완료"
-                    android:textSize="20sp"
                     android:textColor="@color/PrimaryVariant"
-                    />
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </FrameLayout>

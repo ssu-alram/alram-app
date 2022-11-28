@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ALARM</string>
+<<<<<<< HEAD
     <string name="기본설정">默认设置</string>
     <string name="푸시알림띄우기">弹出警报生成通知</string>
     <string name="푸시알림띄우기_설명">如果没有设置闹钟，会在同一时间发送生成闹钟的推送通知。</string>
@@ -9,6 +10,15 @@
     <string name="알람기본값시간">指定默認警報時間</string>
     <string name="알람기본값설정">指定生成提醒的时间</string>
 
+=======
+    <string name="text1">默认设置</string>
+    <string name="text2">弹出警报生成通知</string>
+    <string name="text3">如果没有设置闹钟，会在同一时间发送生成闹钟的推送通知。</string>
+
+    <string name="text1_1">設置警報默認值</string>
+    <string name="text2_1">如果沒有設置鬧鐘，則默認設置為響鈴。</string>
+    <string name="text3_1">指定默認警報時間</string>
+>>>>>>> 2ae0942 (체크리스트 추가 기능)
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="am">AM</string>
@@ -16,6 +26,8 @@
     <string name="시간">00</string>
     <string name="내일의목표">明天的目標</string>
     <string name="할일추가">在此處添加您的待辦事項列表!</string>
+    <string name="할일추가제한">最多只能填写7个。</string>
+
     <string name="설정완료">設置完成</string>
     <string name="현재">今天</string>
     <string name="체크표시전">完成複選標記！</string>
