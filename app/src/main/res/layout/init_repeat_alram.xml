@@ -20,7 +20,7 @@
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:background="@drawable/backgroundresource"
-        android:text="@string/text1"
+        android:text="@string/기본설정"
         android:textColor="#ffffff"
         android:textSize="20dp" />
 
@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="10dp"
-        android:text="@string/text1_1"
+        android:text="@string/알람기본값설정"
         android:textColor="#ffffff"
         android:textSize="20dp" />
 
@@ -42,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/text2_1"
+        android:text="@string/알람기본값설정_설명"
         android:textColor="#ffffff"
         android:textSize="15dp" />
 
@@ -65,7 +65,7 @@
         android:layout_weight="1"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="@string/text3_1"
+        android:text="@string/알람기본값시간"
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="20dp" />
