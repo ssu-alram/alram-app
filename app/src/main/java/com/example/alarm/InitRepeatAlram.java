@@ -34,7 +34,20 @@ public class InitRepeatAlram extends AppCompatActivity implements View.OnClickLi
                 "com.example.alarm.InitPushAlram"
         );
         intent.setComponent(init_one);
-        startActivity(intent);
+
+        if(view == backbutton){
+            startActivity(intent);}
+
+        Intent intent2 = new Intent();
+        ComponentName main = new ComponentName(
+                "com.example.alarm",
+                "com.example.alarm.MainActivity"
+        );
+        intent2.setComponent(main);
+
+        if (view == nextbutton){
+        startActivity(intent2);
+        }
     }
 
 }
