@@ -8,28 +8,162 @@
     tools:context=".MainActivity">
 
 
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_main"
-            android:name="com.example.alarm.FragmentMain"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_calender"
-            android:name="com.example.alarm.FragmentCalender"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <!-- TODO: 캘린더 화면 만들기 -->
+            <LinearLayout
+                android:id="@+id/calender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/목표기록장"
+                        android:textSize="30sp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="이 공간에는 날자를 띄웁니다"
+                        />
+                </LinearLayout>
+
+                <!--달력 영역-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp"
+                    android:layout_weight="7"
+                    android:background="@drawable/bg_calender_layout">
+
+                    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                        android:id="@+id/calendarView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:mcv_showOtherDates="all"
+                        app:mcv_selectionColor="#00F"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- TODO: 메인 화면 만들기 -->
+            <LinearLayout
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="@string/내일의목표"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/OnPrimary"/>
+
+                <com.example.ticker.core.ui.Ticker
+                    android:id="@+id/time_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
+                    android:layout_gravity="center"
+                    app:hoursFormat="hours12"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:minutesInterval="1"
+                    app:shouldAmSelected="false" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TableLayout
+                            android:id="@+id/todo_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="20dp">
+                            <include layout="@layout/todo_list_design"/>
+                            <include layout="@layout/todo_list_design"/>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="5dp"
+                                android:id="@+id/addTODO">
+                                <CheckBox
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="invisible">
+                                </CheckBox>
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/할일추가"
+                                    android:textColorHint="@color/PrimaryVariantTransparent"
+                                    android:textColor="@color/PrimaryVariantTransparent"
+                                    android:background="@color/None"/>
+                            </TableRow>
+
+                        </TableLayout>
+                    </ScrollView>
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/bg_btn_layout"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="@string/설정완료"
+                    android:textSize="20sp"
+                    android:textColor="@color/PrimaryVariant"
+                    />
+
+            </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/tabView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/bg_tab_layout"
             android:orientation="horizontal"
@@ -40,8 +174,8 @@
                 android:id="@+id/tab1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/None"
                 android:src="@drawable/ic_calendar" />
 
@@ -49,7 +183,6 @@
                 android:id="@+id/tab2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
                 android:backgroundTint="@color/None"
                 android:src="@drawable/ic_alarm" />
 
@@ -57,12 +190,13 @@
                 android:id="@+id/tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/None"
                 android:src="@drawable/ic_filled_settings" />
 
         </LinearLayout>
-    </FrameLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

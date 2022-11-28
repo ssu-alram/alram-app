@@ -20,4 +20,12 @@
     <string name="할일목록후">할 일 목록을 완료했어요!</string>
 
     <string name="목표기록장">목표 기록장</string>
+    <string name="월요일">월요일</string>
+    <string name="화요일">화요일</string>
+    <string name="수요일">수요일</string>
+    <string name="목요일">목요일</string>
+    <string name="금요일">금요일</string>
+    <string name="토요일">토요일</string>
+    <string name="일요일">일요일</string>
+
 </resources>

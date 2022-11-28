@@ -1,47 +1,40 @@
 package com.example.alarm;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity{
-    Fragment fragment_main, fragment_calender;
+import androidx.appcompat.app.AppCompatActivity;
 
-    FragmentManager fm = getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private LinearLayout calenderView;
+    private LinearLayout mainView;
+
+    public MainActivity() {
+        super(R.layout.activity_main);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 프래그먼트 객체 선언
-        fragment_main = new FragmentMain();
-        fragment_calender = new FragmentCalender();
+        calenderView = findViewById(R.id.calender);
+        mainView = findViewById(R.id.main);
+        calenderView.setVisibility(View.GONE);
+        mainView.setVisibility(View.VISIBLE);
 
-        fragmentTransaction.replace(R.id.fragment_main, new FragmentMain()).commit();
+        findViewById(R.id.tab1).setOnClickListener(this);
+        findViewById(R.id.tab2).setOnClickListener(this);
+    }
 
-        LinearLayout tabView = findViewById(R.id.tabView);
-        tabView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()){
-                    case R.id.tab1:
-                        fm.beginTransaction().replace(R.id.fragment_calender, fragment_calender).commitAllowingStateLoss();
-                        break;
-                    case R.id.tab2:
-                        fm.beginTransaction().replace(R.id.fragment_main, fragment_main).commitAllowingStateLoss();
-                        break;
-                }
-            }
-        });
+
+
+    @Override
+    public void onClick(View view) {
+        calenderView.setVisibility(View.GONE);
+        mainView.setVisibility(View.GONE);
+        if (view.getId() == R.id.tab1) calenderView.setVisibility(View.VISIBLE);
+        else if (view.getId() == R.id.tab2) mainView.setVisibility(View.VISIBLE);
     }
 }
