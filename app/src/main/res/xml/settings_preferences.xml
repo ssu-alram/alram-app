@@ -47,7 +47,7 @@
                 </SwitchPreference>
             </PreferenceScreen>
 
-        </PrefrenceScreen>
+        </PreferenceScreen>
 
         <PreferenceScreen
             android:title="언어"
