@@ -25,5 +25,11 @@
     <string name="할일목록후">你已經完成了你的待辦事項清單！</string>
     <string name="목표기록장">進球記錄本</string>
 
-
+    <string name="월요일">星期一</string>
+    <string name="화요일">星期二</string>
+    <string name="수요일">星期三</string>
+    <string name="목요일">星期四</string>
+    <string name="금요일">星期五</string>
+    <string name="토요일">星期六</string>
+    <string name="일요일">星期天</string>
 </resources>

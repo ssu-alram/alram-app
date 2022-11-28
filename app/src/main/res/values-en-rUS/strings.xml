@@ -4,11 +4,6 @@
     <string name="text1">Default Settings</string>
     <string name="text2">Create Alarms Display Notifications</string>
     <string name="text3">If you do not set an alarm, send a push notification to generate the alarm at the same time.</string>
-
-    <string name="text1_1">Setting Alarm Defaults</string>
-    <string name="text2_1">If no alarm is set, set the alarm to sound by default.</string>
-    <string name="text3_1">Specify Default Alarm Time</string>
-
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="text4">Specify the alarm generation time</string>
@@ -17,12 +12,20 @@
     <string name="시간">00</string>
     <string name="내일의목표">Goal of Tomorrow</string>
     <string name="할일추가">Add your to-do here for tomorrow!</string>
-    <string name="설정완료">Setting complete</string>
+    <string name="설정완료">Set Alarm</string>
     <string name="현재">now</string>
     <string name="체크표시전">Complete the checkmarks!</string>
     <string name="체크표시후">Checkmark done!</string>
     <string name="할일목록전">Complete your to-do list!</string>
     <string name="할일목록후">To-do list done!</string>
-    <string name="목표기록장">Goal Record Book</string>
+
+    <string name="목표기록장">To-do record</string>
+    <string name="월요일">Mon</string>
+    <string name="화요일">Thu</string>
+    <string name="수요일">Weds</string>
+    <string name="목요일">Thr</string>
+    <string name="금요일">Fri</string>
+    <string name="토요일">Sat</string>
+    <string name="일요일">Sun</string>
 
 </resources>

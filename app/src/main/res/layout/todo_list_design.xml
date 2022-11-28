@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:id="@+id/todoDesign">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </CheckBox>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/할일추가"
+        android:textColorHint="@color/PrimaryVariant"
+        android:textColor="@color/PrimaryVariant"
+        android:background="@color/None"/>
+
+</TableRow>
