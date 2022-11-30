@@ -9,8 +9,6 @@
     <string name="알람기본값설정_설명">알람을 설정하지 않은 경우,\n 기본값으로 울릴 알람을 설정합니다.</string>
     <string name="알람기본값시간">기본값 알람 시간 지정하기</string>
 
-    <string name="on">ON</string>
-    <string name="off">OFF</string>
     <string name="am">오전</string>
     <string name="pm">오후</string>
     <string name="시간">00</string>
@@ -18,33 +16,13 @@
     <string name="할일추가">이 곳에 내일 할 일을 추가하세요!</string>
     <string name="설정완료">설정완료</string>
     <string name="현재">2022 11 13</string>
-    <string name="체크표시전">체크 표시를 완료하세요!</string>
-    <string name="체크표시후">체크 표시를 완료했어요!</string>
-    <string name="할일목록전">할 일 목록을 완료하세요!</string>
-    <string name="할일목록후">할 일 목록을 완료했어요!</string>
     <string name="목표기록장">목표 기록장</string>
-    <string name="월요일">월요일</string>
-    <string name="화요일">화요일</string>
-    <string name="수요일">수요일</string>
-    <string name="목요일">목요일</string>
-    <string name="금요일">금요일</string>
-    <string name="토요일">토요일</string>
-    <string name="일요일">일요일</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>

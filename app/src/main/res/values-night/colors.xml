@@ -5,19 +5,12 @@
     <color name="PrimaryVariantTransparent">#665A00A1</color>
     <color name="Secondary">#03DAC6</color>
     <color name="SecondaryVariant">#018786</color>
-    <color name="Background">#121212</color>
-    <color name="Surface">#121212</color>
-    <color name="Error">#CF6679</color>
     <color name="OnPrimary">#000000</color>
     <color name="OnSecondary">#000000</color>
-    <color name="OnBackground">#FFFFFF</color>
-    <color name="OnSurface">#FFFFFF</color>
-    <color name="OnError">#000000</color>
     <color name="TabColor">#000000</color>
     <color name="BtnColor">#99FFFFFF</color>
     <color name="BtnStrokeColor">#FFFFFF</color>
     <color name="LayoutColor">#803C006B</color>
-    <color name="LayoutStrokeColor">#3C006B</color>
     <color name="None">#00000000</color>
 
     <!-- A custom time picker library 색상 변경 -->

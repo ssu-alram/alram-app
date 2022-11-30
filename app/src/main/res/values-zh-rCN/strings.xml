@@ -9,8 +9,6 @@
     <string name="알람기본값시간">指定默認警報時間</string>
     <string name="알람기본값설정">指定生成提醒的时间</string>
 
-    <string name="on">ON</string>
-    <string name="off">OFF</string>
     <string name="am">AM</string>
     <string name="pm">PM</string>
     <string name="시간">00</string>
@@ -18,17 +16,6 @@
     <string name="할일추가">在此處添加您的待辦事項列表!</string>
     <string name="설정완료">設置完成</string>
     <string name="현재">今天</string>
-    <string name="체크표시전">完成複選標記！</string>
-    <string name="체크표시후">勾選完成！</string>
-    <string name="할일목록전">完成你的待辦事項清單！</string>
-    <string name="할일목록후">你已經完成了你的待辦事項清單！</string>
     <string name="목표기록장">進球記錄本</string>
 
-    <string name="월요일">星期一</string>
-    <string name="화요일">星期二</string>
-    <string name="수요일">星期三</string>
-    <string name="목요일">星期四</string>
-    <string name="금요일">星期五</string>
-    <string name="토요일">星期六</string>
-    <string name="일요일">星期天</string>
 </resources>
