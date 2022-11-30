@@ -1,23 +1,28 @@
 package com.example.alarm;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceFragmentCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.preference.ListPreference;
+import androidx.preference.PreferenceManager;
+import androidx.preference.PreferenceScreen;
 
-public class SettingsActivity extends AppCompatActivity {
-
+import com.google.android.material.shadow.ShadowRenderer;
+public class SettingsActivity extends AppCompatActivity{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedinstanceState) {
+        super.onCreate(savedinstanceState);
         setContentView(R.layout.settings_activity);
 
-
-    class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.settings_preferences, rootKey);
-            addPreferencesFromResource(R.xml.settings_preferences);
-        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.settings_fragment, new SettingsFragment())
+                .commit();
     }
-}}
+
+}
+

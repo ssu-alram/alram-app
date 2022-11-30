@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         calenderView.setVisibility(View.GONE);
         mainView.setVisibility(View.GONE);
+
         if (view.getId() == R.id.tab1) calenderView.setVisibility(View.VISIBLE);
         else if (view.getId() == R.id.tab2) mainView.setVisibility(View.VISIBLE);
     }
+
 }
