@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,8 +24,11 @@ public class SettingsActivity extends AppCompatActivity{
                 .beginTransaction()
                 .replace(R.id.settings_fragment, new SettingsFragment())
                 .commit();
+
+
     }
-
-
 }
+
+
+
 

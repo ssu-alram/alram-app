@@ -1,5 +1,6 @@
 package com.example.alarm;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
@@ -41,8 +43,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.root_preferences);
 // https://lcw126.tistory.com/111
         spref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean isSound = spref.getBoolean("sound",false);
-        Toast.makeText(getActivity(), "진동"+isSound, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -60,7 +60,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-//        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        ///setPreferencesFromResource(R.xml.root_preferences,rootKey);
+
     }
 
 
