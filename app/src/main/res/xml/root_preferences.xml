@@ -4,10 +4,12 @@
 
     <PreferenceCategory        android:title="설정">
         <PreferenceScreen android:title="소리">
-            <SwitchPreference android:title="진동"></SwitchPreference>
+            <SwitchPreference android:title="진동" android:key="진동"></SwitchPreference>
             <PreferenceScreen android:title="spotify"></PreferenceScreen>
             <PreferenceScreen android:title="설정된 벨소리 리스트">
-                <ListPreference android:title="노래"></ListPreference>
+                <ListPreference android:title="노래"
+                    android:entries="@array/저장된벨소리리스트"
+                    android:entryValues="@array/저장된벨소리리스트"></ListPreference>
             </PreferenceScreen>
         </PreferenceScreen>
         <PreferenceScreen android:title="기본">
@@ -23,7 +25,7 @@
             </PreferenceScreen>
         </PreferenceScreen>
         <PreferenceScreen android:title="언어" android:summary="한국어">
-            <ListPreference app:entries="@array/reply_entries" android:entryValues="@array/reply_values"></ListPreference>
+            <ListPreference app:entries="@array/언어" android:entryValues="@array/언어"></ListPreference>
         </PreferenceScreen>
         <PreferenceScreen android:title="화면">
             <CheckBoxPreference
