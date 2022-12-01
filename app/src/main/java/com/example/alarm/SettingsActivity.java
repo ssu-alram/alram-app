@@ -1,16 +1,17 @@
 package com.example.alarm;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.preference.ListPreference;
-import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceScreen;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.shadow.ShadowRenderer;
 public class SettingsActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedinstanceState) {
@@ -23,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity{
                 .replace(R.id.settings_fragment, new SettingsFragment())
                 .commit();
     }
+
 
 }
 

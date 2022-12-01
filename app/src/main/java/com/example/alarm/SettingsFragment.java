@@ -3,8 +3,12 @@ package com.example.alarm;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -15,6 +19,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     SharedPreferences spref ;
     SharedPreferences.Editor editor;
 
+    //
     SharedPreferences.OnSharedPreferenceChangeListener listner = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -34,11 +39,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.root_preferences);
-
+// https://lcw126.tistory.com/111
         spref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean isSound = spref.getBoolean("sound",false);
         Toast.makeText(getActivity(), "진동"+isSound, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onResume(){
         super.onResume();
@@ -54,7 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+//        setPreferencesFromResource(R.xml.root_preferences, rootKey);
     }
 
 
