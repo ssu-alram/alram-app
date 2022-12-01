@@ -1,23 +1,26 @@
 package com.example.alarm;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ticker.core.ui.Ticker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +28,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseFirestore db;
     private static final String TAG1 = "FIREAUTH";
     private static final String TAG2 = "FIRESTORE";
+
     /*
      * xml 레이아웃/뷰 관련 전역변수
      * todoCount - 생성된 투두리스트 개수
@@ -50,14 +57,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout todo1, todo2, todo3, todo4, todo5, todo6, todo7, add;
     private int todoCount = 2;
     private DocumentReference document;
+    private TimePicker timePicker;
 
     /*
-     * 외부 라이브러리 관련 전역변수 (타임피커, 캘린더뷰)
+     * 타임피커 관련 전역변수
      * todoCount - 생성된 투두리스트 개수
      */
-    private Ticker ticker;
+    // https://junghn.tistory.com/entry/JAVA-%EC%9E%90%EB%B0%94-%EB%82%A0%EC%A7%9C-%ED%8F%AC%EB%A7%B7-%EB%B3%80%EA%B2%BD-%EB%B0%A9%EB%B2%95SimpleDateFormat-yyyyMMdd
+    Date today = new Date();
+    Timestamp today_timestamp;
+//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd a hh mm");
+    SimpleDateFormat timeFormat = new SimpleDateFormat("a hh mm");
+    String timeFormat_string = timeFormat.format(today); //set 타임스탬프에 들어갈 시간 변수 미리 만들어놓기. 나중에 이 string의 time만 수정해서 다시 변환할거임
+    Date selectedTime_info = timeFormat.parse(timeFormat_string); //time만 수정해서 다시 변환한
+    Timestamp selectedTime_timestamp;
+    String[] todo = new String[7];
+    /*
+     * 캘린더뷰 관련 전역변수
+     * todoCount - 생성된 투두리스트 개수
+     */
 
-    public MainActivity() {
+    public MainActivity() throws ParseException {
         super(R.layout.activity_main);
     }
 
@@ -77,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         todo6 = findViewById(R.id.todo6);
         todo7 = findViewById(R.id.todo7);
         add = findViewById(R.id.addTODO);
-        ticker = findViewById(R.id.time_picker);
+        timePicker = findViewById(R.id.time_picker);
 
         calenderLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
@@ -126,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /* 레이아웃 관련 */
     // 이벤트 발생 시 동작 함수
     // 클릭 이벤트
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View view) {
         int v = view.getId();
@@ -138,12 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mainLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
         } else if (v == R.id.addTODO) addTODO();
-        else if (v == R.id.ok) {
-//            sendTODO();
-            String timeSelected = ticker.getCurrentlySelectedTime();
-            Log.d("시간", timeSelected);
-//            Log.d("시간", "시간");
-        }
+        else if (v == R.id.ok) sendTODO();
         else if (v == R.id.main) {
             hideKeyboard();
         }
@@ -168,31 +184,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 중복 기능 동작 함수
     // DB로 데이터 전송
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void sendTODO() {
+        // 고른 시간 값 가져오기
+        int selectedH_int = timePicker.getHour();
+        int selectedM_int = timePicker.getMinute();
+        String selectedH = String.valueOf(selectedH_int);
+        String selectedM = String.valueOf(selectedM_int);
+        String AM_PM = "AM";
+        if (selectedH_int > 11) {
+            AM_PM = "PM";
+            selectedH = String.valueOf(selectedH_int - 12);
+        }
+        timeFormat_string = AM_PM+" "+selectedH+" "+selectedM;
+        try {
+            selectedTime_info = timeFormat.parse(timeFormat_string);
+            selectedTime_timestamp = new Timestamp(selectedTime_info);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // 작성한 투두리스트 가져오기
         EditText editText;
+        String text;
         switch (todoCount) {
             case 7:
                 editText = (EditText) getChildView(todo7, R.id.todo_text);
-                //todo firestore에 값 넣기
+                text = String.valueOf(editText.getText());
+                if (text != null) todo[6] = text;
             case 6:
                 editText = (EditText) getChildView(todo6, R.id.todo_text);
-                //todo firestore에 값 넣기
+                text = String.valueOf(editText.getText());
+                if (text != null) todo[5] = text;
             case 5:
                 editText = (EditText) getChildView(todo5, R.id.todo_text);
-                //todo firestore에 값 넣기
+                text = String.valueOf(editText.getText());
+                if (text != null) todo[4] = text;
             case 4:
                 editText = (EditText) getChildView(todo4, R.id.todo_text);
-                //todo firestore에 값 넣기
+                text = String.valueOf(editText.getText());
+                if (text != null) todo[3] = text;
             case 3:
                 editText = (EditText) getChildView(todo3, R.id.todo_text);
-                //todo firestore에 값 넣기
+                text = String.valueOf(editText.getText());
+                if (text != null) todo[2] = text;
             case 2:
                 editText = (EditText) getChildView(todo2, R.id.todo_text);
-                //todo firestore에 값 넣기
+                text = String.valueOf(editText.getText());
+                if (text != null) todo[1] = text;
             case 1:
                 editText = (EditText) getChildView(todo1, R.id.todo_text);
-                //todo firestore에 값 넣기
+                text = String.valueOf(editText.getText());
+                if (text != null) todo[0] = text;
+                else todo[0] = getString(R.string.빈_투두);
         }
+        today_timestamp = new Timestamp(new Date());
+        makeStruct(today_timestamp, selectedTime_timestamp, todo);
     }
 
     // TODOLIST 생성
@@ -255,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //      4. "todo" (배열) 투두리스트에 작성한 내용
 
     // 저장할 객체 형식을 생성해봅시다
-    private void makeStruct() {
+    private void makeStruct(Timestamp create, Timestamp set, String[] todo) {
         List main = new ArrayList<Object>();
         Map<String, Object> tmp = new HashMap<String, Object>();
 
@@ -263,10 +310,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Map<String,Object> updates = new HashMap<String, Object>();
         updates.put("timestamp", FieldValue.serverTimestamp());
 
-        tmp.put("create", ""); //타임스탬프 넣기
-        tmp.put("end", ""); //타임스탬프 넣기
-        tmp.put("set", ""); //타임스탬프 넣기
-        tmp.put("todo", ""); //배열 넣기
+        tmp.put("create", create); //타임스탬프 넣기
+        tmp.put("set", set); //타임스탬프 넣기
+        tmp.put("end", set); //타임스탬프 넣기... 나중에 main에 추가하는 방식으로 가야할듯. 맨 마지막 인덱스로 가서 고치는걸로!
+        tmp.put("todo", todo); //배열 넣기
         main.add(tmp);
     }
 

@@ -22,7 +22,7 @@
     <!-- Preference Titles -->
 
     <!-- Messages Preferences -->
-
+    <string name="빈_투두">기상시간 입니다!</string>
     <!-- Sync Preferences -->
 
 </resources>
