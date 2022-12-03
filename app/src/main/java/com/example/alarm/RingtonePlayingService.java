@@ -38,12 +38,15 @@ public class RingtonePlayingService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        // 설정해둔 알람음으로 세팅해두기
+        mediaPlayer = MediaPlayer.create(this, R.raw.ouu);
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mediaPlayer.start();
             }
         });
+
         if (Build.VERSION.SDK_INT >= 26) {
             String CHANNEL_ID = "default";
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
@@ -82,7 +85,6 @@ public class RingtonePlayingService extends Service {
 
         // 알람음 재생 X , alarm on 데이터 들어옴
         if(!this.isRunning && startId == 1) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.ouu);
             mediaPlayer.start();
 
             this.isRunning = true;

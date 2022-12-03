@@ -1,10 +1,12 @@
 package com.example.alarm;
 
-import android.content.ComponentName;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,6 +102,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.context = this;
 
+        // 최초 실행 여부 판단
+        // https://kiwinam.com/posts/1/android-shared-preferences/
+        SharedPreferences pref = getSharedPreferences("isFirst", Activity.MODE_PRIVATE);
+        boolean first = pref.getBoolean("isFirst", false);
+        if(first==false){
+            //앱 최초 실행시 초기 설정 화면 실행
+            my_intent = new Intent(this.context, InitAlram.class);
+            startActivity(my_intent);
+        }
+
         calenderLayout = findViewById(R.id.calender);
         mainLayout = findViewById(R.id.main);
 //        editText = findViewById(R.id.todo_text);
@@ -157,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         else if (v == R.id.main) {
-            hideKeyboard();
+//            hideKeyboard();
         }else if(v == R.id.tab3){
             Intent settingintent = new Intent();
 
@@ -409,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void updateDocumentArray(Map<String, Object> data) {
         // [START update_document_array]
         // 하루에 하나의 데이터만 생성.
-        DocumentReference document = db.collection("user").document(user.getUid());
+        DocumentReference document = db.collection("user").document(mAuth.getCurrentUser().getUid());
 
         // Atomically remove a new Map<> to the "main" array field.
         // document.update(dateFormat_string, FieldValue.arrayRemove(data));
