@@ -1,6 +1,8 @@
 package com.example.alarm;
 
 import android.content.ComponentName;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -27,15 +29,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -52,31 +53,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /*
      * xml 레이아웃/뷰 관련 전역변수
-     * todoCount - 생성된 투두리스트 개수
      */
     private LinearLayout calenderLayout;
     private LinearLayout mainLayout;
     private LinearLayout todo1, todo2, todo3, todo4, todo5, todo6, todo7, add;
-    private int todoCount = 2;
+    private int todoCount = 2; //생성된 투두리스트 개수
     private DocumentReference document;
     private TimePicker timePicker;
 
     /*
      * 타임피커 관련 전역변수
-     * todoCount - 생성된 투두리스트 개수
      */
     // https://junghn.tistory.com/entry/JAVA-%EC%9E%90%EB%B0%94-%EB%82%A0%EC%A7%9C-%ED%8F%AC%EB%A7%B7-%EB%B3%80%EA%B2%BD-%EB%B0%A9%EB%B2%95SimpleDateFormat-yyyyMMdd
-    Date today = new Date();
-    Timestamp today_timestamp;
-//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd a hh mm");
-    SimpleDateFormat timeFormat = new SimpleDateFormat("a hh mm");
-    String timeFormat_string = timeFormat.format(today); //set 타임스탬프에 들어갈 시간 변수 미리 만들어놓기. 나중에 이 string의 time만 수정해서 다시 변환할거임
-    Date selectedTime_info = timeFormat.parse(timeFormat_string); //time만 수정해서 다시 변환한
-    Timestamp selectedTime_timestamp;
-    String[] todo = new String[7];
+    private Date now = new Date();
+    private Timestamp today_timestamp = new Timestamp(new Date());
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //필드 이름으로 들어갈 string 생성
+    private String dateFormat_string = dateFormat.format(now);
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("a hh mm");
+    private String timeFormat_string = timeFormat.format(now); //나중에 이 string의 time만 수정해서 다시 변환할거임
+    private SimpleDateFormat finalFormat = new SimpleDateFormat("yyyy-MM-dd a hh mm");
+    private String finalFormat_string = finalFormat.format(now); //set 타임스탬프에 들어갈 시간 변수 미리 만들어놓기
+    private Date selectedTime_info = finalFormat.parse(finalFormat_string); //time만 수정해서 다시 변환한
+    private Timestamp selectedTime_timestamp;
+    private Map<String,Object> data;
+
+    /*
+     * 알람 관련 전역변수
+     */
+    Context context;
+    private AlarmManager alarm_manager; // 알람매니저 설정
+    final Calendar calendar = Calendar.getInstance(); // Calendar 객체 생성
+    private Intent my_intent;
+    private PendingIntent pendingIntent;
     /*
      * 캘린더뷰 관련 전역변수
-     * todoCount - 생성된 투두리스트 개수
      */
 
     public MainActivity() throws ParseException {
@@ -87,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.context = this;
 
         calenderLayout = findViewById(R.id.calender);
         mainLayout = findViewById(R.id.main);
@@ -115,37 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
         // Access a Cloud Firestore instance from your Activity
         db = FirebaseFirestore.getInstance();
-
-        mAuth.signInAnonymously()
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG1, "signInAnonymously:success");
-                            user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG1, "signInAnonymously:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-
-//        // 출처 - https://recipes4dev.tistory.com/48
-//        items = new ArrayList<String>();
-//        // 문제 해결 - https://stackoverflow.com/questions/28192815/how-to-add-customised-layout-to-arrayadapter
-//        adapter = new ArrayAdapter(this, R.layout.todo_list_design, R.id.todo_text, items);
-//        listview = findViewById(R.id.listview);
-//        listview.setAdapter(adapter);
-//        addTODO();
-//        addTODO();
+        loginCheck();
+        alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
     }
-
-
 
     /* 레이아웃 관련 */
     // 이벤트 발생 시 동작 함수
@@ -162,8 +146,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             calenderLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
+        } else if (v == R.id.tab3) {
+            Intent intent = new Intent(this, SettingsActivity.class); //https://sharp57dev.tistory.com/18
+            startActivity(intent);
         } else if (v == R.id.addTODO) addTODO();
-        else if (v == R.id.ok) sendTODO();
+        else if (v == R.id.ok) {
+            setAlarm(timePicker.getHour(), timePicker.getMinute());
+            sendTODO();
+            Intent intent = new Intent(this, AlarmRunning.class);
+            startActivity(intent);
+        }
         else if (v == R.id.main) {
             hideKeyboard();
         }else if(v == R.id.tab3){
@@ -182,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     }
 
-    // 키보드 내리기 이벤트
+    // 키보드 내리기
     private void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -199,6 +191,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return null;
     }
 
+    // 알람 시간 맞추기
+    private void setAlarm(int Hour, int Minute) {
+        // calendar에 시간 셋팅
+        calendar.set(Calendar.HOUR_OF_DAY, Hour);
+        calendar.set(Calendar.MINUTE, Minute);
+
+        // 시간 가져옴
+//        Toast.makeText(MainActivity.this,"Alarm 예정 " + Hour + "시 " + Minute + "분",Toast.LENGTH_SHORT).show();
+
+        // reveiver에 string 값 넘겨주기
+        my_intent = new Intent(this.context, AlarmReceiver.class);
+        my_intent.putExtra("state","alarm on");
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, my_intent,
+                PendingIntent.FLAG_MUTABLE); //뭔지 잘 모름
+        // 알람셋팅
+        alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                pendingIntent);
+    }
+
+
     // 중복 기능 동작 함수
     // DB로 데이터 전송
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -214,8 +226,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             selectedH = String.valueOf(selectedH_int - 12);
         }
         timeFormat_string = AM_PM+" "+selectedH+" "+selectedM;
+        finalFormat_string = dateFormat_string + " " + timeFormat_string;
         try {
-            selectedTime_info = timeFormat.parse(timeFormat_string);
+            selectedTime_info = finalFormat.parse(finalFormat_string);
+            // 현재시각을 기준으로 아침 알람 맞추기
+            if (now.after(selectedTime_info)){
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(selectedTime_info);
+                cal.add(Calendar.DATE, 1); // 다음날(1일 후)
+                selectedTime_info = cal.getTime();
+            }
             selectedTime_timestamp = new Timestamp(selectedTime_info);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -224,45 +244,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 작성한 투두리스트 가져오기
         EditText editText;
         String text;
+        ArrayList<String> todo = new ArrayList<String>();
         switch (todoCount) {
             case 7:
                 editText = (EditText) getChildView(todo7, R.id.todo_text);
                 text = String.valueOf(editText.getText());
-                if (text != null) todo[6] = text;
+                if (!text.equals("")) todo.add(0, text);
+                // 값 띄울때는 todo.get(7)
             case 6:
                 editText = (EditText) getChildView(todo6, R.id.todo_text);
                 text = String.valueOf(editText.getText());
-                if (text != null) todo[5] = text;
+                if (!text.equals("")) todo.add(0, text);
             case 5:
                 editText = (EditText) getChildView(todo5, R.id.todo_text);
                 text = String.valueOf(editText.getText());
-                if (text != null) todo[4] = text;
+                if (!text.equals("")) todo.add(0, text);
             case 4:
                 editText = (EditText) getChildView(todo4, R.id.todo_text);
                 text = String.valueOf(editText.getText());
-                if (text != null) todo[3] = text;
+                if (!text.equals("")) todo.add(0, text);
             case 3:
                 editText = (EditText) getChildView(todo3, R.id.todo_text);
                 text = String.valueOf(editText.getText());
-                if (text != null) todo[2] = text;
+                if (!text.equals("")) todo.add(0, text);
             case 2:
                 editText = (EditText) getChildView(todo2, R.id.todo_text);
                 text = String.valueOf(editText.getText());
-                if (text != null) todo[1] = text;
+                if (!text.equals("")) todo.add(0, text);
             case 1:
                 editText = (EditText) getChildView(todo1, R.id.todo_text);
                 text = String.valueOf(editText.getText());
-                if (text != null) todo[0] = text;
-                else todo[0] = getString(R.string.빈_투두);
+                if (!text.equals("")) todo.add(0, text);
+                else todo.add(0, getString(R.string.빈_투두));
         }
-        today_timestamp = new Timestamp(new Date());
-        makeStruct(today_timestamp, selectedTime_timestamp, todo);
+        Map<String,Object> data = makeStruct(today_timestamp, selectedTime_timestamp, todo);
+
+        // 필드 업데이트
+        updateDocumentArray(data);
+//        db.collection("user").document(user.getUid()).update("main", data);
+        Log.d(TAG2, "데이터 업데이트 완료");
     }
 
     // TODOLIST 생성
     public void addTODO() {
         if (todoCount == 6) {
-            Snackbar.make(calenderLayout, R.string.할일추가제한, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mainLayout, R.string.할일추가제한, Snackbar.LENGTH_SHORT).show();
         } else {
             todoCount++;
             if (todoCount == 2) todo3.setVisibility(View.VISIBLE);
@@ -296,12 +322,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /* FIREBASE 관련 */
     // firebase-auth 관리 함수
     // 활동을 초기화할 때 사용자가 현재 로그인되어 있는지 확인
-    @Override
-    public void onStart() {
-        super.onStart();
+    public void loginCheck() {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        if (currentUser == null){
+            mAuth.signInAnonymously()
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG1, "signInAnonymously:success");
+                                user = mAuth.getCurrentUser();
+                                setDocument();
+                                updateUI(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG1, "signInAnonymously:failure", task.getException());
+                                Toast.makeText(MainActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+                            }
+                        }
+                    });
+        }
+        else updateUI(currentUser);
+        user = mAuth.getCurrentUser();
     }
 
     // TODO 해당 유저의 알람 데이터 DB에서 가져오기
@@ -319,39 +365,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //      4. "todo" (배열) 투두리스트에 작성한 내용
 
     // 저장할 객체 형식을 생성해봅시다
-    private void makeStruct(Timestamp create, Timestamp set, String[] todo) {
-        List main = new ArrayList<Object>();
+    private Map<String,Object> makeStruct(Timestamp create, Timestamp set, ArrayList<String> todo) {
         Map<String, Object> tmp = new HashMap<String, Object>();
-
-        // Update the timestamp field with the value from the server
-        Map<String,Object> updates = new HashMap<String, Object>();
-        updates.put("timestamp", FieldValue.serverTimestamp());
-
         tmp.put("create", create); //타임스탬프 넣기
         tmp.put("set", set); //타임스탬프 넣기
         tmp.put("end", set); //타임스탬프 넣기... 나중에 main에 추가하는 방식으로 가야할듯. 맨 마지막 인덱스로 가서 고치는걸로!
         tmp.put("todo", todo); //배열 넣기
-        main.add(tmp);
+        return tmp;
+    }
+
+    // end 데이터를 수정합니다
+    private Map<String,Object> modifyStruct(Map<String,Object> data, Timestamp end) {
+        data.put("end", end);
+        return data;
     }
 
     // 단일 문서 만들기. 문서 처음 생성 시(유저의 첫번째 알람 설정 시)에만 사용
     public void setDocument() {
-        List main = new ArrayList<Object>();
-        Map<String, Object> tmp = new HashMap<String, Object>();
-
-        // Update the timestamp field with the value from the server
-        Map<String,Object> updates = new HashMap<String, Object>();
-        updates.put("timestamp", FieldValue.serverTimestamp());
-
-        tmp.put("create", FieldValue.serverTimestamp()); //타임스탬프 넣기
-        tmp.put("end", null); //타임스탬프 넣기
-        tmp.put("set", ""); //타임스탬프 넣기
-        tmp.put("todo", ""); //배열 넣기
-        main.add(tmp);
+        Map<String, Object> main = new HashMap<>();
 
         // 유저 UID로 문서 생성 후 그 안에 해당 유저에 대한 정보 삽입
         // 참고 - https://cloud.google.com/firestore/docs/samples/firestore-data-set-array-operations?hl=ko#firestore_data_set_array_operations-java
         DocumentReference document = db.collection("user").document(user.getUid());
+        // 문서까지만 생성
         document
                 .set(main)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -367,24 +403,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
         // [END set_document]
-
-        Map<String, Object> data = new HashMap<String, Object>();
-
-        // [START set_with_id]
-        db.collection("cities").document("new-city-id").set(data);
-        // [END set_with_id]
     }
 
+    // DB에 데이터넣기
     public void updateDocumentArray(Map<String, Object> data) {
         // [START update_document_array]
+        // 하루에 하나의 데이터만 생성.
         DocumentReference document = db.collection("user").document(user.getUid());
 
-        // todo 추가, 삭제하는 함수 각각 만들어서 빼기
-        // Atomically add a new Map<> to the "main" array field.
-        document.update("main", FieldValue.arrayUnion(data));
-
         // Atomically remove a new Map<> to the "main" array field.
-        document.update("main", FieldValue.arrayRemove(data));
+        // document.update(dateFormat_string, FieldValue.arrayRemove(data));
+
+        // Atomically add a new Map<> to the "main" array field.
+        document.update(dateFormat_string, data);
+
         // [END update_document_array]
     }
 }

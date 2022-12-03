@@ -12,13 +12,11 @@
 
     <string name="am">AM</string>
     <string name="pm">PM</string>
-    <string name="시간">00</string>
     <string name="내일의목표">明天的目標</string>
     <string name="할일추가">在此處添加您的待辦事項列表!</string>
     <string name="할일추가제한">最多只能填写7个。</string>
     <string name="설정완료">設置完成</string>
-
-    <string name="현재">今天</string>
+    <string name="설정완료알림">晚安！</string>
     <string name="목표기록장">進球記錄本</string>
     <string name="title_activity_settings">SettingsActivity</string>
 

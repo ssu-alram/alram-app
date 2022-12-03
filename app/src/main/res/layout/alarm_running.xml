@@ -7,6 +7,7 @@
     tools:context=".AlarmRunning">
 
     <LinearLayout
+        android:id="@+id/running"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,23 +17,38 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|top"
             android:layout_margin="10dp"
-            android:background="@drawable/x">
+            android:background="@drawable/ic_cancel"
+            android:id="@+id/cancel"/>
 
-        </Button>
         <TextView
+            android:id="@+id/currentDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="180dp"
             android:gravity="center"
-            android:text="@string/현재"
+            android:text="현재 날짜 띄워주세요"
             android:textSize="30dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/시간"
-            android:textSize="50dp"/>
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/currentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="00"
+                android:textSize="50dp"/>
+            <TextView
+                android:id="@+id/currentAMPM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="AM"
+                android:textSize="30dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
