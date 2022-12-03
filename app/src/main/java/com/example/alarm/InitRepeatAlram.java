@@ -27,6 +27,7 @@ public class InitRepeatAlram extends AppCompatActivity implements View.OnClickLi
     }
     @Override
     public void onClick(View view) {
+        ///이전화면으로 넘어가는 인텐트
         Intent intent = new Intent();
 
         ComponentName init_one = new ComponentName(
@@ -38,6 +39,7 @@ public class InitRepeatAlram extends AppCompatActivity implements View.OnClickLi
         if(view == backbutton){
             startActivity(intent);}
 
+        ///메인화면으로 넘어가는 인텐트
         Intent intent2 = new Intent();
         ComponentName main = new ComponentName(
                 "com.example.alarm",

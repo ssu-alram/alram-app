@@ -1,6 +1,8 @@
 package com.example.alarm;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -143,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        addTODO();
     }
 
+
+
     /* 레이아웃 관련 */
     // 이벤트 발생 시 동작 함수
     // 클릭 이벤트
@@ -162,7 +166,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if (v == R.id.ok) sendTODO();
         else if (v == R.id.main) {
             hideKeyboard();
-        }
+        }else if(v == R.id.tab3){
+            Intent settingintent = new Intent();
+
+            ComponentName settings = new ComponentName(
+                    "com.example.alarm",
+                    "com.example.alarm.SettingsActivity"
+            );
+            settingintent.setComponent(settings);
+            startActivity(settingintent);
+        //설정 액티비티로 이동!
+
+
+
+    }
     }
 
     // 키보드 내리기 이벤트

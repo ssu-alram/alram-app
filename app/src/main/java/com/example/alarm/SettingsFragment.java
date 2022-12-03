@@ -18,31 +18,40 @@ import androidx.preference.PreferenceScreen;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    //데이터 저장?
     SharedPreferences spref ;
     SharedPreferences.Editor editor;
 
-    //
-    SharedPreferences.OnSharedPreferenceChangeListener listner = new SharedPreferences.OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if(key.equals("진동")){
-                boolean b = spref.getBoolean("진동",false);
-                Toast.makeText(getActivity(), "진동 알림 :" +b, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
+    //프리퍼런스를 전역변수 선언
     PreferenceScreen sound;
     PreferenceScreen simple;
     PreferenceScreen language;
     PreferenceScreen display;
 
+    //프리퍼런스 생성하기
+    //https://lcw126.tistory.com/111
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState){
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreate(savedInstanceState);
+        //XML가져와서 생성하겠다
         addPreferencesFromResource(R.xml.root_preferences);
-// https://lcw126.tistory.com/111
-        spref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        //이건 뭐지?spref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        if(rootKey==null){
+            sound = findPreference("sound");
+
+
+        }
+    }
+
+    //프리퍼런스 클릭리스너 역할
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference){
+        String key = preferenceScreen.getKey();
+        if(key.equals("sound")){
+
+        }
+
     }
 
     @Override
@@ -56,12 +65,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onPause(){
         super.onPause();
         spref.unregisterOnSharedPreferenceChangeListener(listner);
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        ///setPreferencesFromResource(R.xml.root_preferences,rootKey);
-
     }
 
 
