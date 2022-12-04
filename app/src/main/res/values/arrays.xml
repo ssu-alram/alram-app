@@ -11,4 +11,11 @@
         <item>영어</item>
         <item>중국어</item>
     </string-array>
+
+    <string-array name="화면">
+        <item>자동모드</item>
+        <item>라이트모드</item>
+        <item>다크모드</item>
+    </string-array>
+
 </resources>

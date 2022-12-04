@@ -1,72 +1,62 @@
 package com.example.alarm;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
+
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    //데이터 저장?
-    SharedPreferences spref ;
-    SharedPreferences.Editor editor;
+    //설정값 저장
+    SharedPreferences SPref;
 
-    //프리퍼런스를 전역변수 선언
-    PreferenceScreen sound;
-    PreferenceScreen simple;
-    PreferenceScreen language;
-    PreferenceScreen display;
+    private Preference Sound;
+    private Preference Default;
+    private Preference Language;
+    private Preference Display;
+
 
     //프리퍼런스 생성하기
     //https://lcw126.tistory.com/111
     @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        super.onCreate(savedInstanceState);
-        //XML가져와서 생성하겠다
-        addPreferencesFromResource(R.xml.root_preferences);
-        //이건 뭐지?spref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+    public void onCreatePreferences(Bundle savedInstanceState, String rootkey) {
+        addPreferencesFromResource(R.xml.main_preferences);
 
-        if(rootKey==null){
-            sound = findPreference("sound");
+        if(rootkey != null) return;
 
+        Sound = (Preference) findPreference("sound_list");
+        Default = (Preference) findPreference("default");
+        Language = (Preference) findPreference("language_list");
+        Display = (Preference) findPreference("display_list");
+
+        SPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        //선택되어있는 값 저장하기
+        if (!SPref.getString("sound_list", "").equals(""))
+            Sound.setSummary(SPref.getString("sound_list", "모닝콜"));
+        if (!SPref.getString("language_list", "").equals(""))
+            Language.setSummary(SPref.getString("language_list", "한국어"));
+        if (!SPref.getString("display_list", "").equals(""))
+            Display.setSummary(SPref.getString("display_list", "자동모드"));
+
+        SPref.registerOnSharedPreferenceChangeListener(prefListener);
+
+    }
+    //설정 바뀌었을 때
+    private SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sPrefs, String key) {
+            if (key.equals("sound_list"))
+                Sound.setSummary(sPrefs.getString("sound_list", "카톡"));
 
         }
-    }
-
-    //프리퍼런스 클릭리스너 역할
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference){
-        String key = preferenceScreen.getKey();
-        if(key.equals("sound")){
-
-        }
-
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        spref.registerOnSharedPreferenceChangeListener(listner);
-
-    }
-    @Override
-    public void onPause(){
-        super.onPause();
-        spref.unregisterOnSharedPreferenceChangeListener(listner);
-    }
-
-
+    };
 
 }
+
+

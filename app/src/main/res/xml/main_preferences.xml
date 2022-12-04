@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference android:title="설정">
+    </Preference>
+
+    //소리설정 부분
+    <PreferenceCategory
+        android:title="소리 설정">
+
+       <SwitchPreference
+           android:key="vibrate"
+           android:title="진동"
+           android:defaultValue="true"
+           android:summary="알람과 함께 진동이 울립니다.">
+       </SwitchPreference>
+
+       <ListPreference
+           android:key="sound_list"
+           android:title="저장된 벨소리 리스트"
+           android:summary="모닝콜"
+           android:entries="@array/저장된벨소리리스트"
+           android:entryValues="@array/저장된벨소리리스트">
+       </ListPreference>
+
+    </PreferenceCategory>
+
+    //기본 설정 부분
+    <PreferenceCategory
+        android:title="기본 설정">
+
+        <SwitchPreference
+            android:key="pushAlarm"
+            android:title="푸시알림 시간 설정"
+            android:summary="계획을 설정하지 않은 경우, 푸시알림을 보냅니다."
+            android:defaultValue="false">
+        </SwitchPreference>
+
+        <SwitchPreference
+            android:key="defaultAlarm"
+            android:title="기본 알람 시간 설정"
+            android:summary="알람을 설정하지 않은 경우, 기본 알람을 설정해 반복 알람을 울립니다."
+            android:defaultValue="false">
+        </SwitchPreference>
+
+    </PreferenceCategory>
+
+    //언어 설정 부분
+    <PreferenceCategory
+        android:title="언어 설정">
+
+        <ListPreference
+            android:key="language_list"
+            android:title="언어 설정"
+            android:summary="한국어"
+            android:entries="@array/언어"
+            android:entryValues="@array/언어">
+        </ListPreference>
+
+    </PreferenceCategory>
+
+    //화면 설정 부분
+    <PreferenceCategory
+        android:title="화면 설정">
+
+        <ListPreference
+            android:key="display_list"
+            android:title="화면 설정"
+            android:summary="자동모드"
+            android:entries="@array/화면"
+            android:entryValues="@array/화면">
+        </ListPreference>
+
+    </PreferenceCategory>
+
+
+
+
+
+
+</PreferenceScreen>
