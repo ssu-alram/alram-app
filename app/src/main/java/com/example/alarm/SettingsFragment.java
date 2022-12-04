@@ -1,4 +1,5 @@
 package com.example.alarm;
+<<<<<<< HEAD
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -6,8 +7,13 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import androidx.preference.Preference;
+=======
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+>>>>>>> 652d60e9f438964a5ac36613f962cb50e7bb68f4
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
 
@@ -55,7 +61,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 Sound.setSummary(sPrefs.getString("sound_list", "카톡"));
 
         }
+<<<<<<< HEAD
     };
+=======
+    }
+
+
+>>>>>>> 652d60e9f438964a5ac36613f962cb50e7bb68f4
 
 }
 
