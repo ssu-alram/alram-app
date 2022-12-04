@@ -26,7 +26,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     //https://lcw126.tistory.com/111
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootkey) {
-        addPreferencesFromResource(R.xml.main_preferences);
+        setPreferencesFromResource(R.xml.main_preferences, rootkey);
 
         if(rootkey != null) return;
 
