@@ -51,10 +51,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (rootkey != null) return;
 
         ///프리퍼런스 만들기
-        Sound = (Preference) findPreference("sound_list");
+        Sound = (ListPreference) findPreference("sound_list");
         Default = (Preference) findPreference("default");
-        Language = (Preference) findPreference("language_list");
-        Display = (Preference) findPreference("display_list");
+        Language = (ListPreference) findPreference("language_list");
+        Display = (ListPreference) findPreference("display_list");
 
         Vibrate = (SwitchPreference) findPreference("vibrate");
         PushAlarm = (SwitchPreference) findPreference("pushAlarm");
@@ -132,20 +132,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public boolean onPreferenceClick(Preference preference) {
 
-
         if (preference.getKey().equals("setting_push_alarm")) {
-            Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
 
-            ///푸시알람 누르면 시간 정하는 다이얼로그
-            TimePickerDialog timeDialog;
-            timeDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                }
-            }, hour, minute, false);
-            timeDialog.show();
         }
         return true;
 
