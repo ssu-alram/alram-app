@@ -147,7 +147,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mainLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
         } else if (v == R.id.tab3) {
-            Intent intent = new Intent(this, SettingsActivity.class); //https://sharp57dev.tistory.com/18
+            Intent intent = new Intent(this, SettingsActivity.class);
+            ComponentName componentName = new ComponentName("com.example.alarm",
+                    "com.example.alarm.SettingsActivity"
+            );//https://sharp57dev.tistory.com/18
+            intent.setComponent(componentName);
             startActivity(intent);
         } else if (v == R.id.addTODO) addTODO();
         else if (v == R.id.ok) {

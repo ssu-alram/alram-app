@@ -37,12 +37,23 @@
             android:defaultValue="false">
         </SwitchPreference>
 
+        <Preference
+            android:key="setting_push_alarm"
+            android:title="푸시알림 시간 설정하기"
+            android:onClick="showTimePickerDialog">
+        </Preference>
+
         <SwitchPreference
             android:key="defaultAlarm"
             android:title="기본 알람 시간 설정"
             android:summary="알람을 설정하지 않은 경우, 기본 알람을 설정해 반복 알람을 울립니다."
             android:defaultValue="false">
         </SwitchPreference>
+
+        <Preference
+            android:key="setting_default_alarm"
+            android:title="기본 알람 시간 설정하기">
+        </Preference>
 
     </PreferenceCategory>
 

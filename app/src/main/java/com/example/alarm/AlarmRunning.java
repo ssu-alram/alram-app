@@ -38,7 +38,7 @@ public class AlarmRunning extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alarm_running);
+        setContentView(R.layout.activity_alarm_running);
 
         this.context = this;
 

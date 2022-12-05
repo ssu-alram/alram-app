@@ -17,10 +17,12 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/drawable/switch_on.xml" value="0.1665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/drawable/switch_selector.xml" value="0.1745" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/drawable/switch_thumb.xml" value="0.1425" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_init_alram.xml" value="0.11671654553227875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_init_push_alram.xml" value="0.152" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_init_repeat_alram.xml" value="0.13467293715262932" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_main.xml" value="0.14065840102607952" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_main_alarm.xml" value="0.12569474134245404" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_setting_push_time.xml" value="0.20478837109876016" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/alarm_running.xml" value="0.14920906370243694" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/fragement_main.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/fragment_calender.xml" value="0.264" />
@@ -29,7 +31,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/init_push_alram_off_default.xml" value="0.12473958333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/init_repeat_alram.xml" value="0.2" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/main_alarm.xml" value="0.2" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/settings_activity.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/settings_activity.xml" value="0.9516129032258065" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/todo_list_design.xml" value="0.12141941000427534" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/xml/default_default_preference.xml" value="0.2039333048311244" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/xml/default_preference.xml" value="0.2039333048311244" />
