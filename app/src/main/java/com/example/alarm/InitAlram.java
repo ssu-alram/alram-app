@@ -1,6 +1,7 @@
 package com.example.alarm;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,18 @@ public class InitAlram extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.repeat_alarm_nextbutton).setOnClickListener(this);
         findViewById(R.id.repeat_alarm_backbutton).setOnClickListener(this);
         findViewById(R.id.repeat_alarm_switch).setOnClickListener(this);
+
+        // todo 초기 세팅
+        //  1. 시스템 설정 변경 -> 뮤직 볼륨 설정
+        //  2. 저장소 접근 권한 -> 음악 파일을 재생하기 위해 저장된 경로에 접근할 수 있는 권한
+        //  3. 다른 앱 위에 표시 -> 휴대폰 잠금 상태에서도 팝업 뜨도록
+        // 권한 설정 방법
+        // 설정 > 애플리케이션 > 우리 어플 > 권한에서 변경 가능
+
+        // 참고 : https://kanais2.tistory.com/291
+        Intent intent = new Intent();
+        intent.setClassName( "com.android.settings" , "com.android.settings.SoundSettings" );
+        startActivity(intent);
     }
 
     @Override
