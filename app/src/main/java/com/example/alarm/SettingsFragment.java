@@ -48,8 +48,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public void onCreatePreferences(Bundle savedInstanceState, String rootkey) {
         setPreferencesFromResource(R.xml.main_preferences, rootkey);
 
-        if (rootkey != null) return;
-
         ///프리퍼런스 만들기
         Sound = (ListPreference) findPreference("sound_list");
         Default = (Preference) findPreference("default");
@@ -115,14 +113,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             if (key.equals("sound_list")) {
                 Sound.setSummary(SPref.getString("sound_list", "모닝콜"));
                 editor.putString("선택된벨소리", SPref.getString("sound_list", "모닝콜"));
+                editor.commit();
             }
-            if (key.equals("language_list")) {
-                Sound.setSummary(SPref.getString("language_list", "한국어"));
+            else if (key.equals("language_list")) {
+                Language.setSummary(SPref.getString("language_list", "한국어"));
                 editor.putString("선택된언어", SPref.getString("language_list", "한국어"));
+                editor.commit();
             }
-            if (key.equals("display_list")) {
-                Sound.setSummary(SPref.getString("display_list", "자동모드"));
+            else if (key.equals("display_list")) {
+                Display.setSummary(SPref.getString("display_list", "자동모드"));
                 editor.putString("선택된모드", SPref.getString("display_list", "자동모드"));
+                editor.commit();
             }
 
         }
