@@ -1,31 +1,17 @@
 package com.example.alarm;
 
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
+
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.widget.TimePicker;
-
-
-import androidx.core.view.OneShotPreDrawListener;
-import androidx.fragment.app.DialogFragment;
-import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
-import org.checkerframework.checker.units.qual.C;
-
-import java.util.Calendar;
 
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener {
@@ -127,20 +113,47 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 editor.putString("선택된모드", SPref.getString("display_list", "자동모드"));
                 editor.commit();
             }
+            else if (key.equals("vibrate")){
+                editor.putBoolean("vibrate",SPref.getBoolean("vibrate",true));
+                editor.commit();
+            }
+            else if (key.equals("pushAlarm")){
+                editor.putBoolean("pushAlarm",SPref.getBoolean("pushAlarm",true));
+                editor.commit();
+            }
+            else if (key.equals("defaultAlarm")){
+                editor.putBoolean("defaultAlarm",SPref.getBoolean("defaultAlarm",true));
+                editor.commit();
+            }
 
         }
-
     };
+
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
 
         if (preference.getKey().equals("setting_push_alarm")) {
+            Intent intent = new Intent();
+            ComponentName componentName = new ComponentName(
+                    "com.example.alarm",
+                    "com.example.alarm.settings_time"
+            );
+            intent.setComponent(componentName);
+            startActivity(intent);
+        }else if (preference.getKey().equals("setting_default_alarm")) {
+            Intent intent = new Intent();
+            ComponentName componentName = new ComponentName(
+                    "com.example.alarm",
+                    "com.example.alarm.settings_time"
+            );
+            intent.setComponent(componentName);
+            startActivity(intent);
 
         }
         return true;
 
+    }
+}
 
-}
-}
 

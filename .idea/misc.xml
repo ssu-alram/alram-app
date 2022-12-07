@@ -17,6 +17,8 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/drawable/switch_on.xml" value="0.1665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/drawable/switch_selector.xml" value="0.1745" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/drawable/switch_thumb.xml" value="0.1425" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_alarm_ringing.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_alarm_running.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_init_alram.xml" value="0.11671654553227875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_init_push_alram.xml" value="0.152" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ALARM/app/src/main/res/layout/activity_init_repeat_alram.xml" value="0.13467293715262932" />
