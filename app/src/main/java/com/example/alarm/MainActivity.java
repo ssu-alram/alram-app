@@ -3,7 +3,6 @@ package com.example.alarm;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -31,7 +31,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,12 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String userId;
     private FirebaseFirestore db;
     private static final String TAG1 = "FIREAUTH";
-    private static final String TAG2 = "FIRESTORE";
+    private static final String TAG2 = "FIRESTORE PUT";
+    private static final String TAG3 = "FIRESTORE GET";
 
     /*
      * xml 레이아웃/뷰 관련 전역변수
      */
     private LinearLayout calenderLayout;
+    private TextView today;
     private LinearLayout mainLayout;
     private LinearLayout todo1, todo2, todo3, todo4, todo5, todo6, todo7, add;
     private int todoCount = 2; //생성된 투두리스트 개수
@@ -77,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String finalFormat_string = finalFormat.format(now); //set 타임스탬프에 들어갈 시간 변수 미리 만들어놓기
     private Date selectedTime_info = finalFormat.parse(finalFormat_string); //time만 수정해서 다시 변환한
     private Timestamp selectedTime_timestamp;
-    private Map<String,Object> data;
 
     /*
      * 알람 관련 전역변수
@@ -90,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /*
      * 캘린더뷰 관련 전역변수
      */
+    private Map<String,Object> todos = new HashMap<>();
+
 
     public MainActivity() throws ParseException {
         super(R.layout.activity_main);
@@ -123,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         todo6 = findViewById(R.id.todo6);
         todo7 = findViewById(R.id.todo7);
         add = findViewById(R.id.addTODO);
+        today = findViewById(R.id.today);
+        today.setText(dateFormat_string);
         timePicker = findViewById(R.id.time_picker);
 
         calenderLayout.setVisibility(View.GONE);
@@ -130,7 +137,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.tab1).setOnClickListener(this);
         findViewById(R.id.tab2).setOnClickListener(this);
+        findViewById(R.id.tab3).setOnClickListener(this);
         findViewById(R.id.ok).setOnClickListener(this);
+        findViewById(R.id.music).setOnClickListener(this);
+        findViewById(R.id.stop).setOnClickListener(this);
         mainLayout.setOnClickListener(this);
         add.setOnClickListener(this);
 //        findViewById(R.id.todo_text).setOnClickListener(this);
@@ -141,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db = FirebaseFirestore.getInstance();
         loginCheck();
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
     }
 
     /* 레이아웃 관련 */
@@ -154,40 +165,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             calenderLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);
             calenderLayout.setVisibility(View.VISIBLE);
-        } else if (v == R.id.tab2) {
+        }
+        else if (v == R.id.tab2) {
             calenderLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
-        } else if (v == R.id.tab3) {
+        }
+        else if (v == R.id.tab3) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            ComponentName componentName = new ComponentName("com.example.alarm",
-                    "com.example.alarm.SettingsActivity"
-            );//https://sharp57dev.tistory.com/18
-            intent.setComponent(componentName);
             startActivity(intent);
-        } else if (v == R.id.addTODO) addTODO();
+        }
+        else if (v == R.id.addTODO) addTODO();
         else if (v == R.id.ok) {
             setAlarm(timePicker.getHour(), timePicker.getMinute());
             sendTODO();
             Intent intent = new Intent(this, AlarmRunning.class);
             startActivity(intent);
+//            my_intent = new Intent("com.android.music.musicservicecommand");
+//            my_intent.putExtra("state","alarm on");
+//            sendBroadcast(my_intent);
+        }
+        else if (v == R.id.music) {
+            Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_MUSIC);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+//            my_intent = new Intent("com.android.music.musicservicecommand");
+//            my_intent.putExtra("state","alarm on");
+//            sendBroadcast(my_intent);
+        }
+        else if (v == R.id.stop) {
+//            AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//            if (mAudioManager.isMusicActive()) {
+//                my_intent = new Intent("com.android.music.musicservicecommand");
+//                my_intent.putExtra("state","alarm off");
+//                sendBroadcast(my_intent);
+//            }
         }
         else if (v == R.id.main) {
             hideKeyboard();
-        }else if(v == R.id.tab3){
-            Intent settingintent = new Intent();
-
-            ComponentName settings = new ComponentName(
-                    "com.example.alarm",
-                    "com.example.alarm.SettingsActivity"
-            );
-            settingintent.setComponent(settings);
-            startActivity(settingintent);
-        //설정 액티비티로 이동!
-
-
-
-    }
+        }
     }
 
     // 키보드 내리기
@@ -340,8 +357,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // 활동을 초기화할 때 사용자가 현재 로그인되어 있는지 확인
     public void loginCheck() {
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null){
+       user = mAuth.getCurrentUser();
+        if (user == null){
             mAuth.signInAnonymously()
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -362,13 +379,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     });
         }
-        else updateUI(currentUser);
-        user = mAuth.getCurrentUser();
+        else updateUI(user);
     }
 
     // TODO 해당 유저의 알람 데이터 DB에서 가져오기
     private void updateUI(FirebaseUser user) {
+        ArrayList<CalendarDay> lightBlue = new ArrayList<>();
+        ArrayList<CalendarDay> darkBlue = new ArrayList<>();
 
+        DocumentReference document = db.collection("user").document(user.getUid());
+        document.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String,Object> date = document.getData();
+                        for(String key : date.keySet()){
+//                            Log.d(TAG3, key + " = " + date.get(key));
+                            Todo todo = new Todo();
+                            Map<String,Object> data = (Map<String, Object>) date.get(key);
+                            for(String key2 : data.keySet()){
+                                if (key2.equals("todo")) todo.setTodoData((ArrayList<String>) data.get(key2));
+                                else if (key2.equals("set")) todo.setSetTime((Timestamp) data.get(key2));
+                                else if (key2.equals("create")) todo.setCreatedTime((Timestamp) data.get(key2));
+                                else if (key2.equals("end")) todo.setEndTime((Timestamp) data.get(key2));
+                            }
+                            todos.put(key, todo);
+                        }
+
+//                        Log.d(TAG3, "DocumentSnapshot data: " + date.get("2022-12-06"));
+                    } else {
+                        Log.d(TAG3, "No such document");
+                    }
+//                    Log.d(TAG3, String.valueOf(todos));
+
+                } else {
+                    Log.d(TAG3, "get failed with ", task.getException());
+                }
+            }
+        });
+//        CalendarDay mydate= CalendarDay.from(2020,  12, 31); // year, month, date
+//        EventDecorator eventDecorator = new EventDecorator();
+//        calendarView.addDecorators(CurrentDayDecorator(this, mydate))
     }
 
     // firebase-firestore 관리 함수

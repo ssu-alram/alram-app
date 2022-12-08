@@ -1,7 +1,6 @@
 package com.example.alarm;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -44,10 +43,19 @@ public class InitAlram extends AppCompatActivity implements View.OnClickListener
         // 권한 설정 방법
         // 설정 > 애플리케이션 > 우리 어플 > 권한에서 변경 가능
 
+        // 1. 시스템 설정 변경 창으로 이동해서 허용하도록 함. 토스트 띄워서 설정해달라고 요청함
         // 참고 : https://kanais2.tistory.com/291
-        Intent intent = new Intent();
-        intent.setClassName( "com.android.settings" , "com.android.settings.SoundSettings" );
-        startActivity(intent);
+//        Intent intent = new Intent();
+//        intent.setClassName( "com.android.settings" , "com.android.settings.SoundSettings" );
+//        startActivity(intent);
+
+        // 2.
+        //
+
+
+        // 3.
+        //
+
     }
 
     @Override

@@ -95,11 +95,19 @@ public class AlarmRunning extends AppCompatActivity implements View.OnClickListe
             // todo 알람 울리면 미션창 뜨도록 설정. 미션 완료시 알람 취소되도록 설정.
 
             // 알람매니저 취소
+//            AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//            if (mAudioManager.isMusicActive()) {
+//                my_intent = new Intent("com.android.music.musicservicecommand");
+//                my_intent.putExtra("state","alarm off");
+//                sendBroadcast(my_intent);
+//            }
+
             my_intent = new Intent(this.context, AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(AlarmRunning.this, 0, my_intent,
                     PendingIntent.FLAG_MUTABLE); //뭔지 잘 모름
             alarm_manager.cancel(pendingIntent);
             my_intent.putExtra("state","alarm off");
+
             // 알람취소
             sendBroadcast(my_intent);
             finish();
