@@ -25,4 +25,20 @@
     <string name="빈_투두">Time to wake up!</string>
     <!-- Sync Preferences -->
 
+    <string name="설정">Setting</string>
+    <string name="소리설정">Sound Setting</string>
+    <string name="진동">Vibration</string>
+    <string name="진동설명">It vibrates with an alarm.</string>
+    <string name="저장된벨소리">Selected Sound List</string>
+    <string name="선택된벨소리">Selected Sound</string>
+
+    <string name="언어설정">Language Setting</string>
+    <string name="선택된언어">selected language</string>
+    <string name="한국어">Korean</string>
+
+    <string name="화면설정">Display Setting</string>
+    <string name="라이트모드">Light Mode</string>
+    <string name="자동모드">Automation Mode</string>
+    <string name="다크모드">Dark Mode</string>
+
 </resources>

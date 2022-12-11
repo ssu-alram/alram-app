@@ -2,24 +2,29 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Preference android:title="설정">
+    <Preference
+        android:title="@string/설정"
+        android:icon="@drawable/backbtn">
+        <intent
+            android:targetClass="com.example.alarm.MainActivity"
+            android:targetPackage="com.example.alarm" />
 
     </Preference>
 
     //소리설정 부분
     <PreferenceCategory
-        android:title="소리 설정">
+        android:title="@string/소리설정">
 
        <SwitchPreference
            android:key="vibrate"
-           android:title="진동"
+           android:title="@string/진동"
            android:defaultValue="true"
-           android:summary="알람과 함께 진동이 울립니다.">
+           android:summary="@string/진동설명">
        </SwitchPreference>
 
        <ListPreference
            android:key="sound_list"
-           android:title="저장된 벨소리 리스트"
+           android:title="@string/저장된벨소리"
            android:summary="모닝콜"
            android:entries="@array/저장된벨소리리스트"
            android:entryValues="@array/저장된벨소리리스트">
@@ -29,19 +34,19 @@
 
     //기본 설정 부분
     <PreferenceCategory
-        android:title="기본 설정">
+        android:title="@string/기본설정">
 
         <SwitchPreference
             android:key="pushAlarm"
-            android:title="푸시알림 시간 설정"
-            android:summary="계획을 설정하지 않은 경우, 푸시알림을 보냅니다."
+            android:title="@string/푸시알림띄우기"
+            android:summary="@string/푸시알림띄우기_설명"
             android:defaultValue="false"
             >
         </SwitchPreference>
 
         <Preference
             android:key="setting_push_alarm"
-            android:title="푸시알림 시간 설정하기"
+            android:title="@string/푸시알림시간"
             app:dependency="pushAlarm">
             <intent
                 android:targetClass="com.example.alarm.setting_push_time"
@@ -50,14 +55,14 @@
 
         <SwitchPreference
             android:key="defaultAlarm"
-            android:title="기본 알람 시간 설정"
-            android:summary="알람을 설정하지 않은 경우, 기본 알람을 설정해 반복 알람을 울립니다."
+            android:title="@string/알람기본값설정"
+            android:summary="@string/알람기본값설정_설명"
             android:defaultValue="false">
         </SwitchPreference>
 
         <Preference
             android:key="setting_default_alarm"
-            android:title="기본 알람 시간 설정하기"
+            android:title="@string/알람기본값시간"
             app:dependency="defaultAlarm">
             <intent
                 android:targetClass="com.example.alarm.setting_push_time"
@@ -68,11 +73,11 @@
 
     //언어 설정 부분
     <PreferenceCategory
-        android:title="언어 설정">
+        android:title="@string/언어설정">
 
         <ListPreference
             android:key="language_list"
-            android:title="언어 설정"
+            android:title="@string/언어설정"
             android:summary="한국어"
             android:entries="@array/언어"
             android:entryValues="@array/언어">
@@ -82,11 +87,11 @@
 
     //화면 설정 부분
     <PreferenceCategory
-        android:title="화면 설정">
+        android:title="@string/화면설정">
 
         <ListPreference
             android:key="display_list"
-            android:title="화면 설정"
+            android:title="@string/화면설정"
             android:summary="자동모드"
             android:entries="@array/화면"
             android:entryValues="@array/화면">

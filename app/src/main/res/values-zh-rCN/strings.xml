@@ -26,4 +26,20 @@
     <string name="빈_투두">该起床了！</string>
     <!-- Sync Preferences -->
 
+    <string name="설정">放</string>
+    <string name="소리설정">聲音設置</string>
+    <string name="진동">振動</string>
+    <string name="진동설명">它會振動並發出警報。</string>
+    <string name="저장된벨소리">保存的鈴聲列表</string>
+    <string name="선택된벨소리">選定的聲音</string>
+
+    <string name="언어설정">語言設置</string>
+    <string name="선택된언어">選擇的語言</string>
+    <string name="한국어">韓國人</string>
+
+    <string name="화면설정">顯示設定</string>
+    <string name="라이트모드">燈光模式</string>
+    <string name="자동모드">自動化模式</string>
+    <string name="다크모드">深色模式</string>
+
 </resources>
