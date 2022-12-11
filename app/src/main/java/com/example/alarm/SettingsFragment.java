@@ -132,6 +132,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public void onPause() {
         super.onPause();
         SPref.unregisterOnSharedPreferenceChangeListener(prefListener);
+
     }
 
 

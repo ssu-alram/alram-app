@@ -61,6 +61,14 @@
             android:switchMinWidth="50dp"
             />
 
+        <TimePicker
+            android:id="@+id/init_push_alarm_time_picker"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:layout_gravity="center_horizontal"
+            android:timePickerMode="spinner"/>
+
 
     <LinearLayout
         android:id="@+id/push_alarm_check_toggle"
@@ -192,6 +200,14 @@
             android:switchPadding="50dp"
             android:thumb="@drawable/switch_thumb"
             android:track="@drawable/selector_switch" />
+
+        <TimePicker
+            android:id="@+id/init_push_alarm_time_picker_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:layout_gravity="center_horizontal"
+            android:timePickerMode="spinner"/>
 
 
     <LinearLayout
