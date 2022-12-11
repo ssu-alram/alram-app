@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--  알람음 재생 권한  -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--  외부 어플리케이션 음악 재생 권한  -->
+    <!--  참고) https://developer.android.com/guide/topics/media/media-controls?hl=ko#mediasession_implementation  -->
+    <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -39,6 +45,16 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+        </activity>
+
+        <activity
+            android:name=".InitAlram"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <service

@@ -36,8 +36,7 @@ public class RingtonePlayingService extends Service {
 
     @Override
     public void onCreate() {
-        super.onCreate();
-
+        mediaPlayer = MediaPlayer.create(this, R.raw.ouu);
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {

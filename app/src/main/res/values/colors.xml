@@ -6,7 +6,7 @@
     <color name="Secondary">#03DAC6</color>
     <color name="SecondaryVariant">#018786</color>
     <color name="OnPrimary">#FFFFFF</color>
-    <color name="OnSecondary">#000000</color>
+    <color name="OnSecondary">#4D000000</color>
     <color name="TabColor">#FFFFFF</color>
     <color name="BtnColor">#99FFFFFF</color>
     <color name="BtnStrokeColor">#FFFFFF</color>
