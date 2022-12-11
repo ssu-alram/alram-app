@@ -6,10 +6,13 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreference;
 
 
@@ -24,6 +27,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private Preference Default;
     private Preference Language;
     private Preference Display;
+
+    private Preference setpushtime;
+    private Preference setdefaulttime;
+
 
     private SwitchPreference Vibrate;
     private SwitchPreference PushAlarm;
@@ -45,6 +52,38 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         Vibrate = (SwitchPreference) findPreference("vibrate");
         PushAlarm = (SwitchPreference) findPreference("pushAlarm");
         DefaultAlarm = (SwitchPreference) findPreference("defaultAlarm");
+
+        setpushtime = (Preference)findPreference("setting_push_alarm");
+        setpushtime.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                if(preference.getKey().equals("pushAlarm")){
+                Intent intent = new Intent();
+                ComponentName componentName = new ComponentName(
+                        "com.example.alarm",
+                        "com.example.alarm.setting_push_time"
+                );
+                intent.setComponent(componentName);
+                startActivity(intent);}
+                return false;}
+
+        });
+        setdefaulttime = (Preference)findPreference("setting_default_alarm");
+        setdefaulttime.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                Intent intent = new Intent();
+                ComponentName componentName = new ComponentName(
+                        "com.example.alarm",
+                        "com.example.alarm.setting_push_time"
+                );
+                intent.setComponent(componentName);
+                startActivity(intent);
+
+                return false;
+            }
+        });
+
 
         ///Shared Preference 불러오기
         SPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -78,11 +117,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     }
 
+
+
     //설정값 리스너 등록
     @Override
     public void onResume() {
         super.onResume();
         SPref.registerOnSharedPreferenceChangeListener(prefListener);
+
     }
 
     //설정값 리스너 해제
@@ -129,31 +171,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         }
     };
 
-
     @Override
-    public boolean onPreferenceClick(Preference preference) {
-
-        if (preference.getKey().equals("setting_push_alarm")) {
-            Intent intent = new Intent();
-            ComponentName componentName = new ComponentName(
-                    "com.example.alarm",
-                    "com.example.alarm.settings_time"
-            );
-            intent.setComponent(componentName);
-            startActivity(intent);
-        }else if (preference.getKey().equals("setting_default_alarm")) {
-            Intent intent = new Intent();
-            ComponentName componentName = new ComponentName(
-                    "com.example.alarm",
-                    "com.example.alarm.settings_time"
-            );
-            intent.setComponent(componentName);
-            startActivity(intent);
-
-        }
-        return true;
-
+    public boolean onPreferenceClick(@NonNull Preference preference) {
+        return false;
     }
 }
+
+
 
 

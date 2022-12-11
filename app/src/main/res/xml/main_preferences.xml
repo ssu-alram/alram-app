@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference android:title="설정">
+
     </Preference>
 
     //소리설정 부분
@@ -34,13 +35,17 @@
             android:key="pushAlarm"
             android:title="푸시알림 시간 설정"
             android:summary="계획을 설정하지 않은 경우, 푸시알림을 보냅니다."
-            android:defaultValue="false">
+            android:defaultValue="false"
+            >
         </SwitchPreference>
 
         <Preference
             android:key="setting_push_alarm"
             android:title="푸시알림 시간 설정하기"
-            android:onClick="showTimePickerDialog">
+            app:dependency="pushAlarm">
+            <intent
+                android:targetClass="com.example.alarm.setting_push_time"
+                android:targetPackage="com.example.alarm" />
         </Preference>
 
         <SwitchPreference
@@ -52,7 +57,11 @@
 
         <Preference
             android:key="setting_default_alarm"
-            android:title="기본 알람 시간 설정하기">
+            android:title="기본 알람 시간 설정하기"
+            app:dependency="defaultAlarm">
+            <intent
+                android:targetClass="com.example.alarm.setting_push_time"
+                android:targetPackage="com.example.alarm" />
         </Preference>
 
     </PreferenceCategory>

@@ -43,7 +43,7 @@ dependencies {
     implementation 'com.github.prolificinteractive:material-calendarview:1.4.3'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.preference:preference:1.2.0'
     implementation 'com.android.car.ui:car-ui-lib:+'
 
     testImplementation 'junit:junit:4.13.2'

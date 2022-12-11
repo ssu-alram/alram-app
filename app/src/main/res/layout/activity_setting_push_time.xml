@@ -6,6 +6,7 @@
     tools:context=".setting_push_time"
     android:weightSum="10">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

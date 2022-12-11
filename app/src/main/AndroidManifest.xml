@@ -15,15 +15,6 @@
         android:theme="@style/Theme.ALARM"
         tools:targetApi="31">
 
-        <activity
-            android:name=".setting_push_time"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".InitAlram"
@@ -63,11 +54,13 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
-            android:label="@string/title_activity_settings">
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
@@ -78,6 +71,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".setting_push_time"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
