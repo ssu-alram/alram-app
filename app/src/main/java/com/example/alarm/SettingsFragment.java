@@ -57,14 +57,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         setpushtime.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(@NonNull Preference preference) {
-                if(preference.getKey().equals("pushAlarm")){
                 Intent intent = new Intent();
                 ComponentName componentName = new ComponentName(
                         "com.example.alarm",
                         "com.example.alarm.setting_push_time"
                 );
                 intent.setComponent(componentName);
-                startActivity(intent);}
+                startActivity(intent);
                 return false;}
 
         });
@@ -75,7 +74,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 Intent intent = new Intent();
                 ComponentName componentName = new ComponentName(
                         "com.example.alarm",
-                        "com.example.alarm.setting_push_time"
+                        "com.example.alarm.setting_default_time"
                 );
                 intent.setComponent(componentName);
                 startActivity(intent);
@@ -177,7 +176,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         return false;
     }
 }
-
 
 
 

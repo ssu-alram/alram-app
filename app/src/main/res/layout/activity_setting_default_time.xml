@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".setting_push_time"
+    tools:context=".setting_default_time"
     android:weightSum="10">
 
 
@@ -12,9 +12,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-      //뒤로가기 버튼
+        //뒤로가기 버튼
         <Button
-            android:id="@+id/repeat_alarm_backbutton"
+            android:id="@id/repeat_alarm_backbutton"
             android:layout_width="50dp"
             android:layout_height="0dp"
             android:layout_weight="0.5"
@@ -25,13 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4.5"
-            android:text="@string/푸시알림시간"
+            android:text="@string/알람기본값설정"
             android:textSize="20dp"
             android:gravity="center">
         </TextView>
 
         <TimePicker
-            android:id="@id/init_push_alarm_time_picker"
+            android:id="@id/repeat_alarm_time_picker"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
