@@ -8,15 +8,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +38,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,9 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private LinearLayout calenderLayout;
     private TextView today;
-    private LinearLayout mainLayout;
+    private MaterialCalendarView calendarView;
+    private LinearLayout mainLayout, information;
     private LinearLayout todo1, todo2, todo3, todo4, todo5, todo6, todo7, add;
-    private int todoCount = 2; //생성된 투두리스트 개수
+    public static int todoCount = 2; //생성된 투두리스트 개수
     private DocumentReference document;
     private TimePicker timePicker;
 
@@ -74,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Date now = new Date();
     private Timestamp today_timestamp = new Timestamp(new Date());
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //필드 이름으로 들어갈 string 생성
+//    private String dateFormat_string = "2022-12-08";
     private String dateFormat_string = dateFormat.format(now);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("a hh mm");
     private String timeFormat_string = timeFormat.format(now); //나중에 이 string의 time만 수정해서 다시 변환할거임
@@ -90,10 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final Calendar calendar = Calendar.getInstance(); // Calendar 객체 생성
     private Intent my_intent;
     private PendingIntent pendingIntent;
+    private ActivityResultLauncher<Void> overlayPermissionLauncher;
     /*
      * 캘린더뷰 관련 전역변수
      */
     private Map<String,Object> todos = new HashMap<>();
+    private ListView listView;
+    private ArrayAdapter arrayAdapter;
+    private ArrayList<String> arrayList;
 
 
     public MainActivity() throws ParseException {
@@ -104,7 +116,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        viewDidLoad();
+        if (drawOverlaysRequiredButNotGranted()) {
+            // 사용자가 권한을 거부한 경우이므로 강제로 권한설정을 하게 할 것인지 아니면, 메세지만 보여주는 등의 다른 처리를 할 것인지 결정.
+            //overlayPermissionLauncher.launch(null);
+            showOverlayPermissionRequiredMessage();
+            return;
+        }
         this.context = this;
 
         // 최초 실행 여부 판단
@@ -119,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         calenderLayout = findViewById(R.id.calender);
         mainLayout = findViewById(R.id.main);
+        information = findViewById(R.id.information);
 //        editText = findViewById(R.id.todo_text);
         todo1 = findViewById(R.id.todo1);
         todo2 = findViewById(R.id.todo2);
@@ -129,8 +148,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         todo7 = findViewById(R.id.todo7);
         add = findViewById(R.id.addTODO);
         today = findViewById(R.id.today);
-        today.setText(dateFormat_string);
+        listView=findViewById(R.id.list_view);
         timePicker = findViewById(R.id.time_picker);
+        calendarView = findViewById(R.id.calendarView);
 
         calenderLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
@@ -139,10 +159,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tab2).setOnClickListener(this);
         findViewById(R.id.tab3).setOnClickListener(this);
         findViewById(R.id.ok).setOnClickListener(this);
-        findViewById(R.id.music).setOnClickListener(this);
-        findViewById(R.id.stop).setOnClickListener(this);
+        findViewById(R.id.today).setOnClickListener(this);
         mainLayout.setOnClickListener(this);
         add.setOnClickListener(this);
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                for(String key : todos.keySet()) {
+                    if (key.equals(dateFormat.format(date.getDate()))) {
+                        Todo data = (Todo) todos.get(key);
+                        arrayList = data.getTodoData();
+                        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
+//                        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_expandable_list_item_1, arrayList);
+                        listView.setAdapter(arrayAdapter);
+                        arrayAdapter.notifyDataSetChanged();
+                        information.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    else {
+                        information.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
 //        findViewById(R.id.todo_text).setOnClickListener(this);
 
         // Initialize Firebase Auth
@@ -152,6 +192,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loginCheck();
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
+        today.setText(dateFormat_string);
+        calendarView.setSelectedDate(now);
+    }
+
+    private void viewDidLoad() {
+        overlayPermissionLauncher
+                = registerForActivityResult(new GetOverlayWindowPermission(getApplicationContext()), result -> {
+            if (!result) {
+                showOverlayPermissionRequiredMessage();
+            }
+        });
+
+        if (drawOverlaysRequiredButNotGranted()) {
+            overlayPermissionLauncher.launch(null);
+        }
+    }
+    private boolean drawOverlaysRequiredButNotGranted() {
+        return drawOverlaysRequired() && !canDrawOverlays();
+    }
+
+    private boolean drawOverlaysRequired() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
+    }
+
+    private boolean canDrawOverlays() {
+        return Settings.canDrawOverlays(getApplicationContext());
+    }
+    private void showOverlayPermissionRequiredMessage() {
+        Toast.makeText(this, "Overlay 권한은 노티피케이션을 자동으로 처리하는데 꼭 필요한 권한입니다.", Toast.LENGTH_LONG)
+                .show();
     }
 
     /* 레이아웃 관련 */
@@ -170,51 +240,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             calenderLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
+
         }
         else if (v == R.id.tab3) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            my_intent = new Intent(this, SettingsActivity.class);
+            startActivity(my_intent);
         }
         else if (v == R.id.addTODO) addTODO();
         else if (v == R.id.ok) {
-            setAlarm(timePicker.getHour(), timePicker.getMinute());
+            setAlarm();
             sendTODO();
-            Intent intent = new Intent(this, AlarmRunning.class);
-            startActivity(intent);
-//            my_intent = new Intent("com.android.music.musicservicecommand");
-//            my_intent.putExtra("state","alarm on");
-//            sendBroadcast(my_intent);
-        }
-        else if (v == R.id.music) {
-            Intent intent=Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_MUSIC);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-
-//            my_intent = new Intent("com.android.music.musicservicecommand");
-//            my_intent.putExtra("state","alarm on");
-//            sendBroadcast(my_intent);
-        }
-        else if (v == R.id.stop) {
-//            AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-//            if (mAudioManager.isMusicActive()) {
-//                my_intent = new Intent("com.android.music.musicservicecommand");
-//                my_intent.putExtra("state","alarm off");
-//                sendBroadcast(my_intent);
-//            }
+            my_intent = new Intent(this, AlarmRunning.class);
+            startActivity(my_intent);
         }
         else if (v == R.id.main) {
             hideKeyboard();
+        }
+        else if (v == R.id.today) {
+            calendarView.setSelectedDate(now);
         }
     }
 
     // 키보드 내리기
     private void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (inputManager.isAcceptingText()) inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     // todo_list_design.xml 에서 자식 View 가져오기
-    private View getChildView(LinearLayout layout, int id) {
+    public static View getChildView(LinearLayout layout, int id) {
         for (int i = 0; i < layout.getChildCount(); i++) {
             View view = layout.getChildAt(i);
             if (view.getId() == id) {
@@ -225,19 +279,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     // 알람 시간 맞추기
-    private void setAlarm(int Hour, int Minute) {
+    private void setAlarm() {
         // calendar에 시간 셋팅
-        calendar.set(Calendar.HOUR_OF_DAY, Hour);
-        calendar.set(Calendar.MINUTE, Minute);
-
-        // 시간 가져옴
-//        Toast.makeText(MainActivity.this,"Alarm 예정 " + Hour + "시 " + Minute + "분",Toast.LENGTH_SHORT).show();
+        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+        calendar.set(Calendar.MINUTE, timePicker.getMinute());
+        calendar.set(Calendar.SECOND, 0);
 
         // reveiver에 string 값 넘겨주기
         my_intent = new Intent(this.context, AlarmReceiver.class);
         my_intent.putExtra("state","alarm on");
+        my_intent.putExtra("array", arrayList);
+        Log.d("RINGG", String.valueOf(arrayList) + " in MainActivity");
+
         pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, my_intent,
-                PendingIntent.FLAG_MUTABLE); //뭔지 잘 모름
+                PendingIntent.FLAG_IMMUTABLE);
         // 알람셋팅
         alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 pendingIntent);
@@ -249,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void sendTODO() {
         // 고른 시간 값 가져오기
+//        dateFormat.format(calendar.getTime())
         int selectedH_int = timePicker.getHour();
         int selectedM_int = timePicker.getMinute();
         String selectedH = String.valueOf(selectedH_int);
@@ -259,20 +315,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             selectedH = String.valueOf(selectedH_int - 12);
         }
         timeFormat_string = AM_PM+" "+selectedH+" "+selectedM;
-        finalFormat_string = dateFormat_string + " " + timeFormat_string;
+        finalFormat_string = String.format("%s %s", dateFormat_string, timeFormat_string);
         try {
             selectedTime_info = finalFormat.parse(finalFormat_string);
-            // 현재시각을 기준으로 아침 알람 맞추기
-            if (now.after(selectedTime_info)){
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(selectedTime_info);
-                cal.add(Calendar.DATE, 1); // 다음날(1일 후)
-                selectedTime_info = cal.getTime();
-            }
-            selectedTime_timestamp = new Timestamp(selectedTime_info);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        Calendar cal = Calendar.getInstance();
+//        cal.setTime(selectedTime_info);
+        cal.setTimeInMillis(System.currentTimeMillis());
+        // 현재시각을 기준으로 아침 알람 맞추기
+        if (now.after(selectedTime_info)){
+            cal.add(Calendar.DATE, 1); // 다음날(1일 후)
+            calendar.add(Calendar.DATE, 1); // 다음날(1일 후)
+        }
+        selectedTime_info = calendar.getTime();
+        selectedTime_timestamp = new Timestamp(selectedTime_info);
 
         // 작성한 투두리스트 가져오기
         EditText editText;
@@ -283,7 +342,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 editText = (EditText) getChildView(todo7, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
-                // 값 띄울때는 todo.get(7)
             case 6:
                 editText = (EditText) getChildView(todo6, R.id.todo_text);
                 text = String.valueOf(editText.getText());
@@ -357,8 +415,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // 활동을 초기화할 때 사용자가 현재 로그인되어 있는지 확인
     public void loginCheck() {
         // Check if user is signed in (non-null) and update UI accordingly.
-       user = mAuth.getCurrentUser();
-        if (user == null){
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null){
             mAuth.signInAnonymously()
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -368,18 +427,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.d(TAG1, "signInAnonymously:success");
                                 user = mAuth.getCurrentUser();
                                 setDocument();
-                                updateUI(user);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG1, "signInAnonymously:failure", task.getException());
                                 Toast.makeText(MainActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                updateUI(null);
                             }
                         }
                     });
         }
-        else updateUI(user);
+        else {
+            user = mAuth.getCurrentUser();
+        }
+        updateUI(user);
     }
 
     // TODO 해당 유저의 알람 데이터 DB에서 가져오기
@@ -405,12 +465,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 else if (key2.equals("create")) todo.setCreatedTime((Timestamp) data.get(key2));
                                 else if (key2.equals("end")) todo.setEndTime((Timestamp) data.get(key2));
                             }
+
+                            long time = todo.getEndTime().getSeconds() - todo.getSetTime().getSeconds();
+                            Log.d(TAG3, String.valueOf(time));
+                            CalendarDay myDate = CalendarDay.from(todo.getCreatedTime().toDate());
+                            Log.d(TAG3, String.valueOf(CalendarDay.from(todo.getCreatedTime().toDate())));
+                            if (time > 300) {
+                                darkBlue.add(myDate);
+                            }
+                            else {
+                                lightBlue.add(myDate);
+                            }
+
                             todos.put(key, todo);
+//                            arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_expandable_list_item_1, items);
+//                            listView.setAdapter(arrayAdapter);
+//                            Log.d(TAG3, String.valueOf(lightBlue));
+//                            Log.d(TAG3, String.valueOf(darkBlue));
                         }
+//                        Log.d("FINALL", String.valueOf(todos));
+
+                        // 캘린더에 띄우기. EventDecorator 활용
+                        EventDecorator eventDecorator1 = new EventDecorator(R.color.Secondary, lightBlue);
+                        EventDecorator eventDecorator2 = new EventDecorator(R.color.SecondaryVariant, darkBlue);
+                        calendarView.addDecorators(eventDecorator1, eventDecorator2);
+//                        Log.d("FINALL", String.valueOf(lightBlue));
+//                        Log.d("FINALL", String.valueOf(darkBlue));
+
+                        // 캘린더 들어가면 오늘의 투두리스트 정보가 바로 나오도록
+                        Date tmp = now;
+                        try {
+                            tmp = dateFormat.parse(dateFormat_string);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        for(String key : todos.keySet()) {
+                            if (key.equals(dateFormat.format(tmp))) {
+                                Todo data = (Todo) todos.get(key);
+                                arrayList = data.getTodoData();
+                                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
+//                        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_expandable_list_item_1, arrayList);
+                                listView.setAdapter(arrayAdapter);
+                                arrayAdapter.notifyDataSetChanged();
+                                information.setVisibility(View.VISIBLE);
+                                break;
+                            }
+                            else {
+                                information.setVisibility(View.GONE);
+                            }
+                        }
+
 
 //                        Log.d(TAG3, "DocumentSnapshot data: " + date.get("2022-12-06"));
                     } else {
-                        Log.d(TAG3, "No such document");
+                        Log.d(TAG3, "No such document with UID : " + user.getUid());
+                        setDocument();
                     }
 //                    Log.d(TAG3, String.valueOf(todos));
 

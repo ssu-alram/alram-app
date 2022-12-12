@@ -16,6 +16,7 @@
     <string name="할일추가제한">You can only write up to 7.</string>
     <string name="설정완료">Set Alarm</string>
     <string name="설정완료알림">Good night!</string>
+    <string name="기상디폴트">Time to wake up!</string>
     <string name="목표기록장">To-do record</string>
     <string name="title_activity_settings">SettingsActivity</string>
 

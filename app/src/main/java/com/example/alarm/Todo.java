@@ -1,7 +1,6 @@
 package com.example.alarm;
 
 import com.google.firebase.Timestamp;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
 
@@ -35,8 +34,6 @@ public class Todo {
     }
 
     public Boolean setCreatedTime(Timestamp create) {
-        CalendarDay calendarDay;
-
         this.createdTime = create;
         return true;
     }

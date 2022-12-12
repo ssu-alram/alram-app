@@ -14,6 +14,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import java.util.ArrayList;
+
 public class RingtonePlayingService extends Service {
     public RingtonePlayingService() {
     }
@@ -33,10 +35,11 @@ public class RingtonePlayingService extends Service {
     MediaPlayer mediaPlayer;
     int startId;
     boolean isRunning;
+    int music = R.raw.music2; //재생할 음악
 
     @Override
     public void onCreate() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.ouu);
+        mediaPlayer = MediaPlayer.create(this, music);
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -81,11 +84,17 @@ public class RingtonePlayingService extends Service {
 
         // 알람음 재생 X , alarm on 데이터 들어옴
         if(!this.isRunning && startId == 1) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.ouu);
+            mediaPlayer = MediaPlayer.create(this, music);
             mediaPlayer.start();
-
             this.isRunning = true;
             this.startId = 0;
+
+            Intent showIntent = new Intent(getApplicationContext(), AlarmRinging.class);
+            showIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ArrayList<String> stringList = intent.getStringArrayListExtra("array");
+            showIntent.putExtra("array", stringList);
+            Log.d("RINGG", String.valueOf(stringList) + " in RingtonePlayingService");
+            startActivity(showIntent);
         }
 
         // 알람음 재생 O , alarm off 데이터 들어옴

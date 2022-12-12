@@ -16,8 +16,34 @@
     <string name="할일추가제한">최대 7개까지만 작성할 수 있습니다</string>
     <string name="설정완료">설정완료</string>
     <string name="설정완료알림">안녕히 주무세요!</string>
+    <string name="기상디폴트">기상시간 입니다!</string>
     <string name="목표기록장">목표 기록장</string>
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <string-array name="custom_weekdays">
+        <item>일</item>
+        <item>월</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+        <item>토</item>
+    </string-array>
+
+    <string-array name="custom_months">
+        <item>1월</item>
+        <item>2월</item>
+        <item>3월</item>
+        <item>4월</item>
+        <item>5월</item>
+        <item>6월</item>
+        <item>7월</item>
+        <item>8월</item>
+        <item>9월</item>
+        <item>10월</item>
+        <item>11월</item>
+        <item>12월</item>
+    </string-array>
 
     <!-- Preference Titles -->
 

@@ -28,10 +28,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:paddingTop="10dp"
+                    android:paddingBottom="20dp"
                     android:orientation="horizontal"
-                    android:baselineAligned="true">
+                    android:baselineAligned="true"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -41,21 +42,20 @@
 
                     <TextView
                         android:id="@+id/today"
+                        android:paddingStart="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="이 공간에는 날자를 띄웁니다" />
                 </LinearLayout>
 
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5">
                 <!--달력 영역-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_calender_layout"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+
+                    >
 
                     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                         android:id="@+id/calendarView"
@@ -63,34 +63,38 @@
                         android:layout_height="wrap_content"
                         app:mcv_selectionColor="@color/Primary"
                         android:padding="10dp"
-                        app:mcv_showOtherDates="all" />
+                        app:mcv_showOtherDates="other_months"
+                        app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"
+                        />
 
                     <!--투두 정보 영역-->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_centerInParent="true"
-                        android:background="@color/OnSecondary"/>
-                    <ListView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/listview"/>
-<!--                    <include layout="@layout/todo_list_show" android:id="@+id/showtodo1" android:visibility="gone" />-->
-<!--                    <include layout="@layout/todo_list_show" android:id="@+id/showtodo2" android:visibility="gone" />-->
-<!--                    <include layout="@layout/todo_list_show" android:id="@+id/showtodo3" android:visibility="gone" />-->
-<!--                    <include layout="@layout/todo_list_show" android:id="@+id/showtodo4" android:visibility="gone" />-->
-<!--                    <include layout="@layout/todo_list_show" android:id="@+id/showtodo5" android:visibility="gone" />-->
-<!--                    <include layout="@layout/todo_list_show" android:id="@+id/showtodo6" android:visibility="gone" />-->
-<!--                    <include layout="@layout/todo_list_show" android:id="@+id/showtodo7" android:visibility="gone" />-->
+                        android:orientation="vertical"
+                        android:id="@+id/information"
+                        android:visibility="gone">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_centerInParent="true"
+                            android:background="@color/OnSecondary"/>
+                        <ListView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/list_view"
+                            android:paddingStart="30dp"
+                            android:paddingEnd="30dp"
+                            />
+                    </LinearLayout>
 
                 </LinearLayout>
-                </ScrollView>
             </LinearLayout>
 
             <!-- TODO: 메인 화면 만들기 -->
@@ -118,24 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:timePickerMode="spinner"
-                    android:numbersSelectorColor="@color/None">
-
-                </TimePicker>
-
-<!--                <com.example.ticker.core.ui.Ticker-->
-<!--                    android:id="@+id/time_picker"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginLeft="70dp"-->
-<!--                    android:layout_marginRight="70dp"-->
-<!--                    android:layout_weight="3"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:minutesInterval="1"-->
-<!--                    app:shouldAmSelected="false" />-->
+                    android:numbersSelectorColor="@color/None"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -197,31 +184,6 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="@string/설정완료"
-                    android:textColor="@color/PrimaryVariant"
-                    android:textSize="20sp" />
-
-                <Button
-                    android:id="@+id/music"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/bg_btn_layout"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="외부음악재생"
-                    android:textColor="@color/PrimaryVariant"
-                    android:textSize="20sp" />
-                <Button
-                    android:id="@+id/stop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:background="@drawable/bg_btn_layout"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="재생중지"
                     android:textColor="@color/PrimaryVariant"
                     android:textSize="20sp" />
 

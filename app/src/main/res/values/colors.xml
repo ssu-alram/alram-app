@@ -14,8 +14,8 @@
     <color name="None">#00000000</color>
 
     <!-- A custom time picker library 색상 변경 -->
-    <color name="black">#FFFFFF</color>
-    <color name="grey">#CCFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#4B000000</color>
     <color name="time_unit_selected_color">#FFFFFF</color>
     <color name="time_unit_unselected_color">#CCFFFFFF</color>
 </resources>

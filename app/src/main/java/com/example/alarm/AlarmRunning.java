@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 // 알람 설정 btn을 누르면 넘어오는 화면입니다. 해당 화면을 켜두고 자면 됩니다.
@@ -90,23 +92,18 @@ public class AlarmRunning extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         int v = view.getId();
         if (v == R.id.cancel){
-//            Toast.makeText(AlarmRunning.this,"Alarm 종료",Toast.LENGTH_SHORT).show();
 
-            // todo 알람 울리면 미션창 뜨도록 설정. 미션 완료시 알람 취소되도록 설정.
-
-            // 알람매니저 취소
-//            AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-//            if (mAudioManager.isMusicActive()) {
-//                my_intent = new Intent("com.android.music.musicservicecommand");
-//                my_intent.putExtra("state","alarm off");
-//                sendBroadcast(my_intent);
-//            }
+            Intent my_intent = getIntent();
+            ArrayList<String> stringList = my_intent.getStringArrayListExtra("array");
 
             my_intent = new Intent(this.context, AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(AlarmRunning.this, 0, my_intent,
                     PendingIntent.FLAG_MUTABLE); //뭔지 잘 모름
             alarm_manager.cancel(pendingIntent);
             my_intent.putExtra("state","alarm off");
+            my_intent.putExtra("array", stringList);
+            Log.d("RINGG", String.valueOf(stringList) + " in AlarmRunning");
+
 
             // 알람취소
             sendBroadcast(my_intent);

@@ -17,8 +17,34 @@
     <string name="할일추가제한">最多只能填写7个。</string>
     <string name="설정완료">設置完成</string>
     <string name="설정완료알림">晚安！</string>
+    <string name="기상디폴트">起床时间到了！</string>
     <string name="목표기록장">進球記錄本</string>
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <string-array name="custom_weekdays">
+        <item>周日</item>
+        <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+    </string-array>
+
+    <string-array name="custom_months">
+        <item>1月</item>
+        <item>2月</item>
+        <item>3月</item>
+        <item>4月</item>
+        <item>5月</item>
+        <item>6月</item>
+        <item>7月</item>
+        <item>8月</item>
+        <item>9月</item>
+        <item>10月</item>
+        <item>11月</item>
+        <item>12月</item>
+    </string-array>
 
     <!-- Preference Titles -->
 
