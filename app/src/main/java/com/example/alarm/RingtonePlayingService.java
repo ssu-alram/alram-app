@@ -35,15 +35,15 @@ public class RingtonePlayingService extends Service {
     MediaPlayer mediaPlayer;
     int startId;
     boolean isRunning;
-    int music = R.raw.music2; //재생할 음악
+//    int music = R.raw.music2; //재생할 음악
 
     @Override
     public void onCreate() {
-        mediaPlayer = MediaPlayer.create(this, music);
+        mediaPlayer = MediaPlayer.create(this, R.raw.music2);
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mediaPlayer.start();
+                mp.start();
             }
         });
         if (Build.VERSION.SDK_INT >= 26) {
@@ -84,7 +84,7 @@ public class RingtonePlayingService extends Service {
 
         // 알람음 재생 X , alarm on 데이터 들어옴
         if(!this.isRunning && startId == 1) {
-            mediaPlayer = MediaPlayer.create(this, music);
+            mediaPlayer = MediaPlayer.create(this, R.raw.music2);
             mediaPlayer.start();
             this.isRunning = true;
             this.startId = 0;

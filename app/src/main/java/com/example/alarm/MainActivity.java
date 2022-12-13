@@ -102,19 +102,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public static Context context;
     private AlarmManager alarm_manager; // 알람매니저 설정
-    final Calendar calendar = Calendar.getInstance(); // Calendar 객체 생성
+    Calendar calendar = Calendar.getInstance(); // Calendar 객체 생성
     private Intent my_intent;
     private PendingIntent pendingIntent;
     private ActivityResultLauncher<Void> overlayPermissionLauncher;
     private static final int PERMISSION_REQUEST = 0;
+    private ArrayList<String> arrayListUsedInAlarm;
+
     /*
      * 캘린더뷰 관련 전역변수
      */
     private Map<String,Object> todos = new HashMap<>();
     private ListView listView;
     private ArrayAdapter arrayAdapter;
-    private ArrayList<String> arrayList;
-
+    private ArrayList<String> arrayListUsedInCalender;
 
     public MainActivity() throws ParseException {
         super(R.layout.activity_main);
@@ -159,8 +160,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for(String key : todos.keySet()) {
                     if (key.equals(dateFormat.format(date.getDate()))) {
                         Todo data = (Todo) todos.get(key);
-                        arrayList = data.getTodoData();
-                        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
+                        arrayListUsedInCalender = data.getTodoData();
+                        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayListUsedInCalender);
 //                        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_expandable_list_item_1, arrayList);
                         listView.setAdapter(arrayAdapter);
                         arrayAdapter.notifyDataSetChanged();
@@ -367,13 +368,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setAlarm() {
 
         // reveiver에 string 값 넘겨주기
-        my_intent = new Intent(this.context, AlarmReceiver.class);
-        my_intent.putExtra("state","alarm on");
-        my_intent.putExtra("array", arrayList);
-        Log.d("RINGG", String.valueOf(arrayList) + " in MainActivity");
+        Intent intent = new Intent(this.context, AlarmReceiver.class);
+        intent.putExtra("state","alarm on");
+        intent.putExtra("array", arrayListUsedInAlarm);
+        Log.d("RINGG", String.valueOf(arrayListUsedInAlarm) + " in MainActivity");
 
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, my_intent,
-                PendingIntent.FLAG_IMMUTABLE);
+        pendingIntent = PendingIntent.getBroadcast(this.context, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
+        // IMMUTABLE로 하시면 변경이 불가능하다. MUTABLE로 하면 변경이 가능하다.
+        // https://onedaycodeing.tistory.com/159 해결
         // 알람셋팅
         alarm_manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 pendingIntent);
@@ -386,6 +389,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void sendTODO() {
         // 고른 시간 값 가져오기
         // calendar에 시간 셋팅
+        calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
         calendar.set(Calendar.MINUTE, timePicker.getMinute());
         calendar.set(Calendar.SECOND, 0);
@@ -411,48 +415,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        cal.setTime(selectedTime_info);
         cal.setTimeInMillis(System.currentTimeMillis());
         // 현재시각을 기준으로 아침 알람 맞추기
-        if (now.after(selectedTime_info)){
+        if (cal.after(calendar)){
             cal.add(Calendar.DATE, 1); // 다음날(1일 후)
             calendar.add(Calendar.DATE, 1); // 다음날(1일 후)
         }
         selectedTime_info = calendar.getTime();
         selectedTime_timestamp = new Timestamp(selectedTime_info);
+        today_timestamp = new Timestamp(new Date());
 
         // 작성한 투두리스트 가져오기
         EditText editText;
         String text;
         ArrayList<String> todo = new ArrayList<String>();
         switch (todoCount) {
-            case 7:
+            case 6:
                 editText = (EditText) getChildView(todo7, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
-            case 6:
+            case 5:
                 editText = (EditText) getChildView(todo6, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
-            case 5:
+            case 4:
                 editText = (EditText) getChildView(todo5, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
-            case 4:
+            case 3:
                 editText = (EditText) getChildView(todo4, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
-            case 3:
+            case 2:
                 editText = (EditText) getChildView(todo3, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
-            case 2:
+            case 1:
                 editText = (EditText) getChildView(todo2, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
-            case 1:
+            case 0:
                 editText = (EditText) getChildView(todo1, R.id.todo_text);
                 text = String.valueOf(editText.getText());
                 if (!text.equals("")) todo.add(0, text);
                 else todo.add(0, getString(R.string.빈_투두));
         }
+        arrayListUsedInAlarm = todo;
         Map<String,Object> data = makeStruct(today_timestamp, selectedTime_timestamp, todo);
 
         // 필드 업데이트
@@ -587,8 +593,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         for(String key : todos.keySet()) {
                             if (key.equals(dateFormat.format(tmp))) {
                                 Todo data = (Todo) todos.get(key);
-                                arrayList = data.getTodoData();
-                                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayList);
+                                arrayListUsedInCalender = data.getTodoData();
+                                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, arrayListUsedInCalender);
 //                        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_expandable_list_item_1, arrayList);
                                 listView.setAdapter(arrayAdapter);
                                 arrayAdapter.notifyDataSetChanged();

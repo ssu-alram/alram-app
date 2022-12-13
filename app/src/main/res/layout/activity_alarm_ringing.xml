@@ -45,12 +45,12 @@
         android:orientation="vertical"
         android:layout_margin="50dp">
         <include layout="@layout/todo_list_design" android:id="@+id/todo1"/>
-        <include layout="@layout/todo_list_design" android:id="@+id/todo2" android:visibility="gone"/>
-        <include layout="@layout/todo_list_design" android:id="@+id/todo3" android:visibility="gone"/>
-        <include layout="@layout/todo_list_design" android:id="@+id/todo4" android:visibility="gone"/>
-        <include layout="@layout/todo_list_design" android:id="@+id/todo5" android:visibility="gone"/>
-        <include layout="@layout/todo_list_design" android:id="@+id/todo6" android:visibility="gone"/>
-        <include layout="@layout/todo_list_design" android:id="@+id/todo7" android:visibility="gone"/>
+        <include layout="@layout/todo_list_design" android:id="@+id/todo2" android:visibility="invisible"/>
+        <include layout="@layout/todo_list_design" android:id="@+id/todo3" android:visibility="invisible"/>
+        <include layout="@layout/todo_list_design" android:id="@+id/todo4" android:visibility="invisible"/>
+        <include layout="@layout/todo_list_design" android:id="@+id/todo5" android:visibility="invisible"/>
+        <include layout="@layout/todo_list_design" android:id="@+id/todo6" android:visibility="invisible"/>
+        <include layout="@layout/todo_list_design" android:id="@+id/todo7" android:visibility="invisible"/>
     </LinearLayout>
 
 

@@ -1,7 +1,5 @@
 package com.example.alarm;
 
-import static com.example.alarm.MainActivity.getChildView;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -13,8 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +23,12 @@ import java.util.Date;
 
 
 // 정한 시간이 되었을 때, 즉 알람이 울릴 때 뜨는 미션창입니다.
-public class AlarmRinging extends AppCompatActivity implements View.OnClickListener{
+public class AlarmRinging extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
 
     private TextView currentDate;
     private TextView currentTime;
     private TextView currentAMPM;
-    private LinearLayout todo1, todo2, todo3, todo4, todo5, todo6, todo7;
+    private View todo1, todo2, todo3, todo4, todo5, todo6, todo7;
     private CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7;
     private EditText editText1, editText2, editText3, editText4, editText5, editText6, editText7;
 
@@ -43,8 +41,10 @@ public class AlarmRinging extends AppCompatActivity implements View.OnClickListe
     private Intent my_intent;
     private PendingIntent pendingIntent;
     Date time; //알람 꺼진 시각 저장
-
     private static PowerManager.WakeLock sCpuWakeLock;
+    ArrayList<String> stringList;
+    ArrayList<CheckBox> tmp = new ArrayList<>();
+    boolean checked = true;
 
 
 
@@ -56,7 +56,6 @@ public class AlarmRinging extends AppCompatActivity implements View.OnClickListe
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
-
         todo1 = findViewById(R.id.todo1);
         todo2 = findViewById(R.id.todo2);
         todo3 = findViewById(R.id.todo3);
@@ -64,12 +63,35 @@ public class AlarmRinging extends AppCompatActivity implements View.OnClickListe
         todo5 = findViewById(R.id.todo5);
         todo6 = findViewById(R.id.todo6);
         todo7 = findViewById(R.id.todo7);
+        checkBox1 = todo1.findViewById(R.id.checkbox);
+        checkBox2 = todo2.findViewById(R.id.checkbox);
+        checkBox3 = todo3.findViewById(R.id.checkbox);
+        checkBox4 = todo4.findViewById(R.id.checkbox);
+        checkBox5 = todo5.findViewById(R.id.checkbox);
+        checkBox6 = todo6.findViewById(R.id.checkbox);
+        checkBox7 = todo7.findViewById(R.id.checkbox);
+        checkBox1.setOnCheckedChangeListener(this);
+        checkBox2.setOnCheckedChangeListener(this);
+        checkBox3.setOnCheckedChangeListener(this);
+        checkBox4.setOnCheckedChangeListener(this);
+        checkBox5.setOnCheckedChangeListener(this);
+        checkBox6.setOnCheckedChangeListener(this);
+        checkBox7.setOnCheckedChangeListener(this);
+
+        editText1 = todo1.findViewById(R.id.todo_text);
+        editText2 = todo2.findViewById(R.id.todo_text);
+        editText3 = todo3.findViewById(R.id.todo_text);
+        editText4 = todo4.findViewById(R.id.todo_text);
+        editText5 = todo5.findViewById(R.id.todo_text);
+        editText6 = todo6.findViewById(R.id.todo_text);
+        editText7 = todo7.findViewById(R.id.todo_text);
         currentDate = findViewById(R.id.currentDate);
         currentTime = findViewById(R.id.currentTime);
         currentAMPM = findViewById(R.id.currentAMPM);
 
+
         Intent intent = getIntent();
-        ArrayList<String> stringList = intent.getStringArrayListExtra("array");
+        stringList = intent.getStringArrayListExtra("array");
         alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
         Log.d("RINGG", String.valueOf(stringList) + " in AlarmRinging");
 
@@ -77,46 +99,32 @@ public class AlarmRinging extends AppCompatActivity implements View.OnClickListe
         int cnt = stringList.size()-1;
         switch (stringList.size()-1) {
             case 6:
-                checkBox7 = (CheckBox) getChildView(todo7, R.id.checkbox);
-                editText7 = (EditText) getChildView(todo7, R.id.todo_text);
-                checkBox7.setOnClickListener(this);
                 editText7.setText(stringList.get(cnt--));
                 todo7.setVisibility(View.VISIBLE);
+                tmp.add(0, checkBox7);
             case 5:
-                checkBox6 = (CheckBox) getChildView(todo6, R.id.checkbox);
-                editText6 = (EditText) getChildView(todo6, R.id.todo_text);
-                checkBox6.setOnClickListener(this);
                 editText6.setText(stringList.get(cnt--));
                 todo6.setVisibility(View.VISIBLE);
+                tmp.add(0, checkBox6);
             case 4:
-                checkBox5 = (CheckBox) getChildView(todo5, R.id.checkbox);
-                editText5 = (EditText) getChildView(todo5, R.id.todo_text);
-                checkBox5.setOnClickListener(this);
                 editText5.setText(stringList.get(cnt--));
                 todo5.setVisibility(View.VISIBLE);
+                tmp.add(0, checkBox5);
             case 3:
-                checkBox4 = (CheckBox) getChildView(todo4, R.id.checkbox);
-                editText4 = (EditText) getChildView(todo4, R.id.todo_text);
-                checkBox4.setOnClickListener(this);
                 editText4.setText(stringList.get(cnt--));
                 todo4.setVisibility(View.VISIBLE);
+                tmp.add(0, checkBox4);
             case 2:
-                checkBox3 = (CheckBox) getChildView(todo3, R.id.checkbox);
-                editText3 = (EditText) getChildView(todo3, R.id.todo_text);
-                checkBox3.setOnClickListener(this);
                 editText3.setText(stringList.get(cnt--));
                 todo3.setVisibility(View.VISIBLE);
+                tmp.add(0, checkBox3);
             case 1:
-                checkBox2 = (CheckBox) getChildView(todo2, R.id.checkbox);
-                editText2 = (EditText) getChildView(todo2, R.id.todo_text);
-                checkBox2.setOnClickListener(this);
                 editText2.setText(stringList.get(cnt--));
                 todo2.setVisibility(View.VISIBLE);
+                tmp.add(0, checkBox2);
             case 0:
-                checkBox1 = (CheckBox) getChildView(todo1, R.id.checkbox);
-                editText1 = (EditText) getChildView(todo1, R.id.todo_text);
-                checkBox1.setOnClickListener(this);
                 editText1.setText(stringList.get(cnt));
+                tmp.add(0, checkBox1);
         }
 
         // 쓰레드를 이용해서 시계표시
@@ -154,28 +162,6 @@ public class AlarmRinging extends AppCompatActivity implements View.OnClickListe
         thread.start();
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == checkBox1) if (isItAllChecked()) turnOffAlarm();
-        else if (view == checkBox2) if (isItAllChecked()) turnOffAlarm();
-        else if (view == checkBox3) if (isItAllChecked()) turnOffAlarm();
-        else if (view == checkBox4) if (isItAllChecked()) turnOffAlarm();
-        else if (view == checkBox5) if (isItAllChecked()) turnOffAlarm();
-        else if (view == checkBox6) if (isItAllChecked()) turnOffAlarm();
-        else if (view == checkBox7) if (isItAllChecked()) turnOffAlarm();
-    }
-
-    public boolean isItAllChecked() {
-        CheckBox[] tmp = {checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7};
-        for (int i=0; i<tmp.length; i++){
-            if (tmp[i].getVisibility() != View.VISIBLE){
-                if (!tmp[i].isChecked()) return false;
-            }
-            else break;
-        }
-        return true;
-    }
-
     public void turnOffAlarm() {
         Log.d("RINGG", "알람 끄기");
         // calendar에 꺼진시간 저장
@@ -184,7 +170,7 @@ public class AlarmRinging extends AppCompatActivity implements View.OnClickListe
         // reveiver에 string 값 넘겨주기
         my_intent = new Intent(getApplicationContext(), AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, my_intent,
-                PendingIntent.FLAG_MUTABLE);
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
         // 알람매니저 취소
         alarm_manager.cancel(pendingIntent);
@@ -197,6 +183,17 @@ public class AlarmRinging extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         return;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        for (int i=0; i<tmp.size(); i++)
+        {
+            if (!(tmp.get(i).isChecked())) {
+                return;
+            }
+        }
+        turnOffAlarm();
     }
 
 //    You cannot disable home button. 안먹힘.
