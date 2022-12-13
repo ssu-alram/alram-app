@@ -59,4 +59,5 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
+
 </resources>

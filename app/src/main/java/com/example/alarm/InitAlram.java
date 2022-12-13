@@ -1,8 +1,6 @@
 package com.example.alarm;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +9,6 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.checkerframework.checker.units.qual.C;
 
 public class InitAlram extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,9 +21,7 @@ public class InitAlram extends AppCompatActivity implements View.OnClickListener
     private TimePicker push_timepicker, default_timepicker;
     int setHour;
     int setMin;
-
-    SharedPreferences sf = getSharedPreferences("isFirst", Activity.MODE_PRIVATE);
-    SharedPreferences.Editor editor = sf.edit();
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -52,6 +46,8 @@ public class InitAlram extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.repeat_alarm_switch).setOnClickListener(this);
 
 
+        SharedPreferences sf = getSharedPreferences("sFile", Activity.MODE_PRIVATE);
+        editor = sf.edit();
 
         // todo 초기 세팅
         //  1. 시스템 설정 변경 -> 뮤직 볼륨 설정
@@ -98,7 +94,7 @@ public class InitAlram extends AppCompatActivity implements View.OnClickListener
         else if (v == R.id.repeat_alarm_nextbutton){
             // todo 두 기능 모두 미사용 시 주의 다이얼로그 띄우기
             finish();
-            editor.putBoolean("isFirst",true);
+            editor.putBoolean("sFile",true);
             editor.commit();
         }
         else if (v == R.id.push_alarm_switch){

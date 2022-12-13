@@ -1,11 +1,17 @@
 package com.example.alarm;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -24,6 +30,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,7 +56,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     /*
      * firebase 관련 전역변수
@@ -93,12 +100,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /*
      * 알람 관련 전역변수
      */
-    Context context;
+    public static Context context;
     private AlarmManager alarm_manager; // 알람매니저 설정
     final Calendar calendar = Calendar.getInstance(); // Calendar 객체 생성
     private Intent my_intent;
     private PendingIntent pendingIntent;
     private ActivityResultLauncher<Void> overlayPermissionLauncher;
+    private static final int PERMISSION_REQUEST = 0;
     /*
      * 캘린더뷰 관련 전역변수
      */
@@ -116,24 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewDidLoad();
-        if (drawOverlaysRequiredButNotGranted()) {
-            // 사용자가 권한을 거부한 경우이므로 강제로 권한설정을 하게 할 것인지 아니면, 메세지만 보여주는 등의 다른 처리를 할 것인지 결정.
-            //overlayPermissionLauncher.launch(null);
-            showOverlayPermissionRequiredMessage();
-            return;
-        }
         this.context = this;
-
-        // 최초 실행 여부 판단
-        // https://kiwinam.com/posts/1/android-shared-preferences/
-        SharedPreferences pref = getSharedPreferences("isFirst", Activity.MODE_PRIVATE);
-        boolean first = pref.getBoolean("isFirst", false);
-        if(first==false){
-            //앱 최초 실행시 초기 설정 화면 실행
-            my_intent = new Intent(this.context, InitAlram.class);
-            startActivity(my_intent);
-        }
 
         calenderLayout = findViewById(R.id.calender);
         mainLayout = findViewById(R.id.main);
@@ -185,43 +176,137 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        findViewById(R.id.todo_text).setOnClickListener(this);
 
+
+        alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+        today.setText(dateFormat_string);
+        calendarView.setSelectedDate(now);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // Access a Cloud Firestore instance from your Activity
         db = FirebaseFirestore.getInstance();
         loginCheck();
-        alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
-        today.setText(dateFormat_string);
-        calendarView.setSelectedDate(now);
-    }
-
-    private void viewDidLoad() {
-        overlayPermissionLauncher
-                = registerForActivityResult(new GetOverlayWindowPermission(getApplicationContext()), result -> {
-            if (!result) {
-                showOverlayPermissionRequiredMessage();
-            }
-        });
-
-        if (drawOverlaysRequiredButNotGranted()) {
-            overlayPermissionLauncher.launch(null);
+        // 최초 실행 여부 판단
+        // https://kiwinam.com/posts/1/android-shared-preferences/
+        SharedPreferences pref = getSharedPreferences("sFile", Activity.MODE_PRIVATE);
+        boolean first = pref.getBoolean("sFile", false);
+        if(first==false){
+            //앱 최초 실행시 초기 설정 화면 실행
+            onCheckPermission();
+            my_intent = new Intent(this.context, InitAlram.class);
+            startActivity(my_intent);
         }
-    }
-    private boolean drawOverlaysRequiredButNotGranted() {
-        return drawOverlaysRequired() && !canDrawOverlays();
+
     }
 
-    private boolean drawOverlaysRequired() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        // BEGIN_INCLUDE(onRequestPermissionsResult)
+        if (requestCode == PERMISSION_REQUEST) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission has been granted. Start Activity.
+                loginCheck();
+                alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+                today.setText(dateFormat_string);
+                calendarView.setSelectedDate(now);
+                // Initialize Firebase Auth
+                mAuth = FirebaseAuth.getInstance();
+                // Access a Cloud Firestore instance from your Activity
+                db = FirebaseFirestore.getInstance();
+            } else {
+
+                // Request for overlay permission.
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+//                Intent intent = new Intent();
+//                intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+//                Uri uri = Uri.fromParts("package",
+//                        BuildConfig.APPLICATION_ID, null);
+//                intent.setData(uri);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("다른 앱 위에 표시")
+                        .setMessage("알람 팝업을 표시하기 위해 저장된 경로에 접근할 수 있는 권한이 필요합니다.")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent();
+                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package",
+                                        BuildConfig.APPLICATION_ID, null);
+                                intent.setData(uri);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+                Snackbar.make(mainLayout, R.string.window_permission_denied,
+                                Snackbar.LENGTH_SHORT).show();
+                loginCheck();
+                alarm_manager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+                today.setText(dateFormat_string);
+                calendarView.setSelectedDate(now);
+                // Initialize Firebase Auth
+                mAuth = FirebaseAuth.getInstance();
+                // Access a Cloud Firestore instance from your Activity
+                db = FirebaseFirestore.getInstance();
+            }
+
+        }
+        // END_INCLUDE(onRequestPermissionsResult)
     }
 
-    private boolean canDrawOverlays() {
-        return Settings.canDrawOverlays(getApplicationContext());
+    private void onCheckPermission() {
+        // BEGIN_INCLUDE(startCamera)
+        // Check if the Camera permission has been granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SYSTEM_ALERT_WINDOW) != PackageManager.PERMISSION_GRANTED
+        || ActivityCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED
+        || ActivityCompat.checkSelfPermission(this, Manifest.permission.MEDIA_CONTENT_CONTROL) != PackageManager.PERMISSION_GRANTED
+        || ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is already available, start
+//            startCamera();
+            requestWindowPermission();
+        } else {
+            // Permission is missing and must be requested.
+            requestWindowPermission();
+        }
+        // END_INCLUDE(startCamera)
     }
-    private void showOverlayPermissionRequiredMessage() {
-        Toast.makeText(this, "Overlay 권한은 노티피케이션을 자동으로 처리하는데 꼭 필요한 권한입니다.", Toast.LENGTH_LONG)
-                .show();
+
+    /**
+     * Requests the {@link android.Manifest.permission#CAMERA} permission.
+     * If an additional rationale should be displayed, the user has to launch the request from
+     * a SnackBar that includes additional information.
+     */
+    private void requestWindowPermission() {
+        // Permission has not been granted and must be requested.
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.SYSTEM_ALERT_WINDOW)) {
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // Display a SnackBar with cda button to request the missing permission.
+            // Request the permission
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{
+                            Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.ACCESS_NOTIFICATION_POLICY},
+                    PERMISSION_REQUEST);
+
+        } else {
+            Snackbar.make(mainLayout, "R.string.camera_unavailable", Snackbar.LENGTH_SHORT).show();
+            // Request the permission. The result will be received in onRequestPermissionResult().
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.SYSTEM_ALERT_WINDOW},
+                    PERMISSION_REQUEST);
+        }
     }
 
     /* 레이아웃 관련 */
@@ -248,8 +333,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (v == R.id.addTODO) addTODO();
         else if (v == R.id.ok) {
-            setAlarm();
             sendTODO();
+            setAlarm();
             my_intent = new Intent(this, AlarmRunning.class);
             startActivity(my_intent);
         }
@@ -280,10 +365,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 알람 시간 맞추기
     private void setAlarm() {
-        // calendar에 시간 셋팅
-        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
-        calendar.set(Calendar.MINUTE, timePicker.getMinute());
-        calendar.set(Calendar.SECOND, 0);
 
         // reveiver에 string 값 넘겨주기
         my_intent = new Intent(this.context, AlarmReceiver.class);
@@ -304,7 +385,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void sendTODO() {
         // 고른 시간 값 가져오기
-//        dateFormat.format(calendar.getTime())
+        // calendar에 시간 셋팅
+        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+        calendar.set(Calendar.MINUTE, timePicker.getMinute());
+        calendar.set(Calendar.SECOND, 0);
+
         int selectedH_int = timePicker.getHour();
         int selectedM_int = timePicker.getMinute();
         String selectedH = String.valueOf(selectedH_int);
@@ -426,6 +511,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG1, "signInAnonymously:success");
                                 user = mAuth.getCurrentUser();
+                                updateUI(user);
                                 setDocument();
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -438,8 +524,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else {
             user = mAuth.getCurrentUser();
+            updateUI(user);
         }
-        updateUI(user);
     }
 
     // TODO 해당 유저의 알람 데이터 DB에서 가져오기

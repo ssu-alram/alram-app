@@ -41,5 +41,6 @@
     <string name="라이트모드">Light Mode</string>
     <string name="자동모드">Automation Mode</string>
     <string name="다크모드">Dark Mode</string>
+    <string name="window_permission_denied">오버레이 권한을 허용해주세요.</string>
 
 </resources>

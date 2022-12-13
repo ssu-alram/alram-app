@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- Notification runtime permission -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <!--  알람음 재생 권한  -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!--  외부 어플리케이션 음악 재생 권한  -->
@@ -11,7 +12,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
-
+    <!-- intent 하면서 액티비티 간에 정보 전달하려면 android:exported="true" 로 해둬야함-->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,44 +24,31 @@
         android:theme="@style/Theme.ALARM"
         tools:targetApi="31">
 
+        <service
+            android:name=".RingtonePlayingService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name=".setting_push_time"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".InitAlram"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
 
         <activity
             android:name=".AlarmRinging"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
 
-        <service
-            android:name=".RingtonePlayingService"
-            android:enabled="true"
-            android:exported="true" />
 
         <receiver
             android:name=".AlarmReceiver"
@@ -72,29 +60,18 @@
             android:exported="true"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".SettingsFragment"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!--    액티비티 다른걸로 전환하면 화면 finish    -->
         <activity
             android:name=".AlarmRunning"
             android:noHistory="true"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".MainActivity"
