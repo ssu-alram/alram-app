@@ -27,6 +27,7 @@
             android:layout_marginTop="180dp"
             android:gravity="center"
             android:text="현재 날짜 띄워주세요"
+            android:textColor="@color/OnPrimary"
             android:textSize="30dp"/>
 
         <LinearLayout
@@ -39,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/OnPrimary"
                 android:text="00"
                 android:textSize="50dp"/>
             <TextView
@@ -46,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="@color/OnPrimary"
                 android:text="AM"
                 android:textSize="30dp"/>
         </LinearLayout>

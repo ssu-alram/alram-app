@@ -457,7 +457,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 필드 업데이트
         updateDocumentArray(data);
-//        db.collection("user").document(user.getUid()).update("main", data);
         Log.d(TAG2, "데이터 업데이트 완료");
     }
 
@@ -528,11 +527,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // TODO 해당 유저의 알람 데이터 DB에서 가져오기
     private void updateUI(FirebaseUser user) {
         ArrayList<CalendarDay> lightBlue = new ArrayList<>();
         ArrayList<CalendarDay> darkBlue = new ArrayList<>();
-
+        //TODO test uid - 0PlX308YNEeleWsHBZNn4VfAAVf1
+//        DocumentReference document = db.collection("user").document("0PlX308YNEeleWsHBZNn4VfAAVf1");
         DocumentReference document = db.collection("user").document(user.getUid());
         document.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -626,7 +625,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //      1. "create" (타임스탬프) 해당 내용이 생성된 시간
     //      2. "end" (타임스탬프) 알람이 울릴 시간
     //      3. "set" (타임스탬프) 알람이 꺼진 시간 -> 나중에 추가됨(맞춘 알람 시간으로 찾아감)
-    //      4. "todo" (배열) 투두리스트에 작성한 내용
+    //      4. "todo_" (배열) 투두리스트에 작성한 내용
 
     // 저장할 객체 형식을 생성해봅시다
     private Map<String,Object> makeStruct(Timestamp create, Timestamp set, ArrayList<String> todo) {
@@ -650,6 +649,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // 유저 UID로 문서 생성 후 그 안에 해당 유저에 대한 정보 삽입
         // 참고 - https://cloud.google.com/firestore/docs/samples/firestore-data-set-array-operations?hl=ko#firestore_data_set_array_operations-java
+        //TODO test uid - 0PlX308YNEeleWsHBZNn4VfAAVf1
+//        DocumentReference document = db.collection("user").document("0PlX308YNEeleWsHBZNn4VfAAVf1");
         DocumentReference document = db.collection("user").document(user.getUid());
         // 문서까지만 생성
         document
@@ -673,6 +674,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void updateDocumentArray(Map<String, Object> data) {
         // [START update_document_array]
         // 하루에 하나의 데이터만 생성.
+        //TODO test uid - 0PlX308YNEeleWsHBZNn4VfAAVf1
+//        DocumentReference document = db.collection("user").document("0PlX308YNEeleWsHBZNn4VfAAVf1");
         DocumentReference document = db.collection("user").document(user.getUid());
 
         // Atomically remove a new Map<> to the "main" array field.

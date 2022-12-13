@@ -127,13 +127,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="5"
                     android:orientation="vertical"
                     android:weightSum="3">
 
                     <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none">
 
 
                         <LinearLayout
@@ -167,7 +168,7 @@
                                     android:hint="@string/할일추가"
                                     android:textColor="@color/PrimaryVariantTransparent"
                                     android:textColorHint="@color/PrimaryVariantTransparent"
-                                    android:textSize="18dp" />
+                                    android:textSize="16dp" />
                             </LinearLayout>
 
                         </LinearLayout>
